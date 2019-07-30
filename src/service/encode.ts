@@ -13,10 +13,13 @@ export const encode = (tiles: Tile[]): string => {
   for (let i = 0; i < tiles.length; i++) {
     quantities.push(1);
     let diff = 3;
-    // 不是末尾
-    if (i < tiles.length - 1) {
-      diff = calculateDiff(tiles[i], tiles[i + 1]);
+    // 如果已经是最后一张牌,写入距离3
+    if (i === tiles.length - 1) {
+      distances.push(diff);
+      break;
     }
+
+    diff = calculateDiff(tiles[i], tiles[i + 1]);
     // 写入距离
     switch (diff) {
       case 0: {
@@ -38,10 +41,6 @@ export const encode = (tiles: Tile[]): string => {
             break;
           }
         }
-        // 如果已经是最后一张牌,写入距离3
-        if (i === tiles.length - 1) {
-          distances.push(3);
-        }
         break;
       }
       case 1: {
@@ -61,12 +60,12 @@ export const encode = (tiles: Tile[]): string => {
       }
     }
   }
-  let temp = 0;
+  index = 0;
   let featureCode = "";
   for (const i of quantities) {
     featureCode += i;
-    if (temp < distances.length) {
-      featureCode += distances[temp++];
+    if (index < distances.length) {
+      featureCode += distances[index++];
     }
   }
   return featureCode;
