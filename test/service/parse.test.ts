@@ -65,7 +65,9 @@ describe("service-parse", () => {
     });
     test("the input chars shouldn't include the invalid chars", () => {
       const incorrectCode = "rtyuio%^&*zswe";
+      const incorrectCode2 = "12234566zff1117777z";
       expect(() => parse(incorrectCode)).toThrow("错误的输入: r");
+      expect(() => parse(incorrectCode2)).toThrow("错误的输入: f");
     });
     test("unexpect tile type", () => {
       const incorrectCode = "1111222233334440m";

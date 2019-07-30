@@ -23,13 +23,6 @@ describe("modal-hand", () => {
     expect(hand.fulu).toEqual(fuluTiles);
     expect(hand.hand).toEqual(handTiles);
   });
-  test("constructor work well", () => {
-    const tiles: Tile[] = [];
-    const fulus: Tile[] = [Tile.create("z6")];
-    const hand = new Hand(tiles, fulus);
-    expect(hand.hand).toEqual([]);
-    expect(hand.fulu).toEqual([Tile.create("z6")]);
-  });
   test("toCode work well", () => {
     const code = "12345678999mf7777z";
     const hand = Hand.fromCode(code);
