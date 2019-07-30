@@ -11,11 +11,13 @@
   "private": false,
   "scripts": {
     "test": "jest",
-    "prettier": "prettier --write src/**/*.{js,ts,json}",
-    "lint": "cross-env yarn prettier && tslint --fix 'src/**/*.ts'",
+    "prettier": "prettier --write {src,test}/**/*.{js,ts,json}",
+    "lint": "cross-env yarn prettier && tslint --fix 'src/**/*.ts'&& tslint --fix 'test/**/*.ts'",
     "prepublishOnly": "cross-env node ./scripts/prepublish.js && yarn tsc"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/lodash": "^4.14.136",
     "cross-env": "^5.2.0",
     "husky": "^3.0.1",
     "jest": "^24.8.0",
@@ -48,5 +50,8 @@
     "LICENSE",
     "package.json",
     "readme.md"
-  ]
+  ],
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
 }
