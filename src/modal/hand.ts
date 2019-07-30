@@ -1,6 +1,7 @@
 import { sortBy } from "lodash";
 import { parse, toCode } from "../service/parse";
 import { Tile } from "./tile";
+import { isTilesValid } from "../utils/hand";
 
 export class Hand {
   public static fromCode(code: string) {
@@ -15,6 +16,7 @@ export class Hand {
   public fulu: Tile[];
 
   constructor(hand: Tile[], fulu: Tile[]) {
+    isTilesValid(hand, fulu);
     this.hand = hand;
     this.fulu = fulu;
   }

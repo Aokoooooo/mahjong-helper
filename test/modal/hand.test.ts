@@ -53,4 +53,18 @@ describe("modal-hand", () => {
     hand.sortTiles();
     expect(hand).toEqual(sortedHand);
   });
+  test("same kind of tile can't exceed 4", () => {
+    const incorrectCode = "11111678m123456s";
+    expect(() => Hand.fromCode(incorrectCode)).toThrow("同种牌最多可有五张");
+  });
+  test("the sum of tiles should be 14", () => {
+    const incorrectCode = "111122223333444m";
+    expect(() => Hand.fromCode(incorrectCode)).toThrow("错误的手牌数量");
+    const incorrectCode2 = "1111222233334m";
+    expect(() => Hand.fromCode(incorrectCode2)).toThrow("错误的手牌数量");
+  });
+  test("the sum of fulu should be the multiple of 3(regard every gang as 3 tiles.)", () => {
+    const incorrectCode = "11223344pf1111m11s";
+    expect(() => Hand.fromCode(incorrectCode)).toThrow("错误的副露数量");
+  });
 });

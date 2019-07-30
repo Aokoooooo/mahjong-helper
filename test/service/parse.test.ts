@@ -63,20 +63,6 @@ describe("service-parse", () => {
       const result = { handTiles, fuluTiles };
       expect(parse("12234566zf1117777z")).toEqual(result);
     });
-    test("same kind of tile can't exceed 4", () => {
-      const incorrectCode = "11111678m123456s";
-      expect(() => parse(incorrectCode)).toThrow("同种牌最多可有五张");
-    });
-    test("the sum of tiles should be 14", () => {
-      const incorrectCode = "111122223333444m";
-      expect(() => parse(incorrectCode)).toThrow("错误的手牌数量");
-      const incorrectCode2 = "1111222233334m";
-      expect(() => parse(incorrectCode2)).toThrow("错误的手牌数量");
-    });
-    test("the sum of fulu should be the multiple of 3(regard every gang as 3 tiles.)", () => {
-      const incorrectCode = "11223344pf1111m11s";
-      expect(() => parse(incorrectCode)).toThrow("错误的副露数量");
-    });
     test("the input chars shouldn't include the invalid chars", () => {
       const incorrectCode = "rtyuio%^&*zswe";
       expect(() => parse(incorrectCode)).toThrow("错误的输入: r");
