@@ -1,7 +1,7 @@
 import { sortBy } from "lodash";
 import { tileEnumKeys, TileEnumKeyType } from "../enum/tile";
 import { Tile } from "../modal/tile";
-import { isSuo, isTong, isValidTileTypeAcronym, isWan, isZi } from "./tile";
+import { isSuo, isTong, isValidTileTypeAcronym, isWan } from "../utils/tile";
 
 export const parse = (code: string) => {
   if (!code || code.trim() === "") {

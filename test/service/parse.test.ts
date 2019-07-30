@@ -1,8 +1,8 @@
 import { TileEnumKeyType } from "../../src/enum/tile";
 import { Tile } from "../../src/modal/tile";
-import { parse, toCode } from "../../src/utils/parse";
+import { parse, toCode } from "../../src/service/parse";
 
-describe("utils-parse", () => {
+describe("service-parse", () => {
   describe("parse", () => {
     test("input can't be null or empty", () => {
       expect(parse).toThrow("输入不可为空");

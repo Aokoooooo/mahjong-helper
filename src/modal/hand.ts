@@ -1,5 +1,5 @@
 import { sortBy } from "lodash";
-import { parse, toCode } from "../utils/parse";
+import { parse, toCode } from "../service/parse";
 import { Tile } from "./tile";
 
 export class Hand {
