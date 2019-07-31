@@ -3,8 +3,8 @@ import { Tile } from "../modal/tile";
 import { isZi } from "../utils/tile";
 
 export const encode = (tiles: Tile[]): string => {
-  if (isEmpty(tiles)) {
-    throw new Error("入参不可为空");
+  if (!tiles) {
+    throw new Error("入参不可为null");
   }
   tiles = sortBy(tiles, ["id"]);
   const quantities: number[] = [];
@@ -41,6 +41,11 @@ export const encode = (tiles: Tile[]): string => {
             break;
           }
         }
+        // 如果已经是最后一张牌,写入距离3
+        if (i === tiles.length - 1) {
+          distances.push(3);
+          break;
+        }
         break;
       }
       case 1: {
@@ -60,13 +65,11 @@ export const encode = (tiles: Tile[]): string => {
       }
     }
   }
-  index = 0;
+
   let featureCode = "";
-  for (const i of quantities) {
-    featureCode += i;
-    if (index < distances.length) {
-      featureCode += distances[index++];
-    }
+  for (let i = 0; i < quantities.length; i++) {
+    featureCode += quantities[i];
+    featureCode += distances[i];
   }
   return featureCode;
 };
@@ -78,7 +81,6 @@ const calculateDiff = (firstTile: Tile, nextTile: Tile): number => {
   } else {
     diff = nextTile.id - firstTile.id;
     diff = diff >= 3 ? 3 : diff;
-    diff = diff < 0 ? 0 : diff;
   }
   return diff;
 };
