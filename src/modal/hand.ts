@@ -1,7 +1,7 @@
 import { sortBy } from "lodash";
 import { parse, toCode } from "../service/parse";
-import { Tile } from "./tile";
 import { isTilesValid } from "../utils/hand";
+import { Tile } from "./tile";
 
 export class Hand {
   public static fromCode(code: string) {

@@ -38,7 +38,8 @@ export const tileEnum = {
   z7: { id: 0x37, name: "中" }
 };
 
-export const tileEnumKeys = Object.keys(tileEnum);
+export const tileEnumKeys = Object.keys(tileEnum) as TileEnumKeyType[];
 export const tileEnumValues = Object.values(tileEnum);
 
 export type TileEnumKeyType = keyof typeof tileEnum;
+export type TileEnumValueType = typeof tileEnum[TileEnumKeyType];
