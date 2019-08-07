@@ -1,4 +1,4 @@
-import { tileEnum, tileEnumKeys, TileEnumKeyType } from "../enum/tile";
+import { tileEnum, TileEnumKeyType } from "../enum/tile";
 
 export class Tile {
   public static create = (acronym: TileEnumKeyType) => {

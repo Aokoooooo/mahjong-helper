@@ -1,5 +1,4 @@
-import { encode } from "../../src/service/encode";
-import { parse } from "../../src/service/parse";
+import { encode, parse } from "../../src";
 
 describe("service-encode", () => {
   test("input params can't be null", () => {

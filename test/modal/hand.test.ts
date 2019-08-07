@@ -1,6 +1,4 @@
-import { TileEnumKeyType } from "../../src/enum/tile";
-import { Hand } from "../../src/modal/hand";
-import { Tile } from "../../src/modal/tile";
+import { Hand, Tile, TileEnumKeyType } from "../../src";
 
 describe("modal-hand", () => {
   test("code should not be blank", () => {

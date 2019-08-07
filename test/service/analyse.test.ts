@@ -1,6 +1,4 @@
-import { analyse } from "../../src/service/analyse";
-import { encode } from "../../src/service/encode";
-import { parse } from "../../src/service/parse";
+import { analyse, encode, parse } from "../../src";
 
 describe("service-analyse", () => {
   test("input params can't be null", () => {

@@ -1,6 +1,6 @@
 import { Tile } from "../modal/tile";
-import { isZi } from "../utils/tile";
 import { sortTiles } from "../utils/hand";
+import { isZi } from "../utils/tile";
 
 export const encode = (tiles: Tile[]): string => {
   if (!tiles) {

@@ -1,8 +1,5 @@
 import { orderBy } from "lodash";
-import { suggest } from "../../src/service/suggest";
-import { Hand } from "../../src/modal/hand";
-import { Tile } from "../../src/modal/tile";
-import { Suggest } from "../../src/modal/suggest";
+import { Hand, Suggest, suggest, Tile } from "../../src";
 
 describe("service-suggest", () => {
   test("input params can't be null", () => {

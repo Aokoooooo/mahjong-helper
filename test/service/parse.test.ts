@@ -1,6 +1,4 @@
-import { TileEnumKeyType } from "../../src/enum/tile";
-import { Tile } from "../../src/modal/tile";
-import { parse, toCode } from "../../src/service/parse";
+import { parse, Tile, TileEnumKeyType, toCode } from "../../src";
 
 describe("service-parse", () => {
   describe("parse", () => {

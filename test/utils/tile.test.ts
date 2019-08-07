@@ -1,6 +1,4 @@
-import { TileEnumKeyType } from "../../src/enum/tile";
-import { Tile } from "../../src/modal/tile";
-import { isFeng, isSanyuan, isZi } from "../../src/utils/tile";
+import { isFeng, isSanyuan, isZi, Tile, TileEnumKeyType } from "../../src";
 
 describe("utils-tile", () => {
   test("is Feng", () => {
