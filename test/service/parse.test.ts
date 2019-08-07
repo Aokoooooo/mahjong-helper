@@ -127,5 +127,13 @@ describe("service-parse", () => {
       }
       expect(toCode(handTiles, fuluTiles)).toEqual("12234566zf1117777z");
     });
+    test("only hand", () => {
+      const handTiles: Tile[] = [];
+      for (const i of "12234566") {
+        const key = `z${i}` as TileEnumKeyType;
+        handTiles.push(Tile.create(key));
+      }
+      expect(toCode(handTiles)).toEqual("12234566z");
+    });
   });
 });

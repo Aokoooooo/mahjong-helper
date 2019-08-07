@@ -7,7 +7,7 @@ export class Tile {
 
   public readonly id: number;
   public readonly name: string;
-  public readonly acronym: string;
+  public readonly acronym: TileEnumKeyType;
 
   constructor(id: number, name: string, acronym: TileEnumKeyType) {
     this.id = id;

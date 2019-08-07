@@ -3,19 +3,19 @@ import { tileEnum, tileEnumKeys } from "../enum/tile";
 import { Hand } from "../modal/hand";
 import { Suggest } from "../modal/suggest";
 import { Tile } from "../modal/tile";
-import { isSuo, isTong, isWan, isZi } from "../utils/tile";
+import { isSuo, isWan, isZi } from "../utils/tile";
 import { analyse } from "./analyse";
 import { encode } from "./encode";
 
-export const suggest = (hands: Hand) => {
-  if (hands === null || hands.hand.length <= 0) {
-    throw new Error("入参不可为空");
+export const suggest = (hands: Hand): Suggest[] | string => {
+  if (!hands || hands.hand.length <= 0) {
+    throw new Error("输入不可为空");
   }
   const { hand, fulu } = hands;
   const code = encode(hand);
   const xiangTing = analyse(code);
   if (xiangTing < 0) {
-    return null;
+    return "荣和";
   }
   const suggests: Suggest[] = [];
   for (let i = 0; i < hand.length; i++) {
@@ -33,7 +33,7 @@ export const suggest = (hands: Hand) => {
           return Math.abs(x.id - tileEnum.s5.id);
         } else if (isWan(x)) {
           return Math.abs(x.id - tileEnum.m5.id);
-        } else if (isTong(x)) {
+        } else {
           return Math.abs(x.id - tileEnum.p5.id);
         }
       }
@@ -48,24 +48,19 @@ const suggestHelper = (
   xiangTing: number,
   suggests: Suggest[],
   fulu: Tile[]
-) => {
+): void => {
   const tile = hand[index];
-  // 不重复计算相同的牌
-  if (suggests.some(i => i.discard.id === tile.id)) {
-    return;
-  }
   let tempXiangTing = xiangTing;
   const suggest = new Suggest(tile, 0, new Map(), xiangTing, xiangTing);
 
   tileEnumKeys.forEach(key => {
-    const cursor = tileEnum[key];
+    const cursor = Tile.create(key);
     // 跳过重复进张
     if (cursor.id === tile.id) {
       return;
     }
-    const testTile = Tile.create(key);
     // 防止进张后单类牌数量大于4
-    if (!isValidCandidate(hand, testTile)) {
+    if (!isValidCandidate(hand, fulu, cursor)) {
       return;
     }
     hand[index] = Tile.create(key);
@@ -73,7 +68,7 @@ const suggestHelper = (
     tempXiangTing = analyse(code);
     // 有效进张
     if (tempXiangTing < xiangTing) {
-      expectTileCounter(suggest, hand, testTile, fulu);
+      countPotentialTiles(suggest, hand, cursor, fulu);
     }
     hand[index] = tile;
   });
@@ -85,39 +80,41 @@ const suggestHelper = (
   }
 };
 
-const expectTileCounter = (
+const countPotentialTiles = (
   suggest: Suggest,
   hand: Tile[],
-  testTile: Tile,
+  cursor: Tile,
   fulu: Tile[]
-) => {
+): void => {
   let count = 0;
-  // 不重复计算
-  if (suggest.details.has(testTile)) {
-    return;
-  }
+  hand.forEach(i => {
+    if (i.id === cursor.id) {
+      count++;
+    }
+  });
+  fulu.forEach(i => {
+    if (i.id === cursor.id) {
+      count++;
+    }
+  });
+
+  count = 5 - count;
+  suggest.details.set(cursor, count);
+  suggest.count = suggest.count + count;
+};
+
+const isValidCandidate = (
+  hand: Tile[],
+  fulu: Tile[],
+  testTile: Tile
+): boolean => {
+  let count = 0;
   hand.forEach(i => {
     if (i.id === testTile.id) {
       count++;
     }
   });
   fulu.forEach(i => {
-    if (i.id === testTile.id) {
-      count++;
-    }
-  });
-
-  count = 5 - count;
-  if (count < 1) {
-    return;
-  }
-  suggest.details.set(testTile, count);
-  suggest.count = suggest.count + count;
-};
-
-const isValidCandidate = (hand: Tile[], testTile: Tile) => {
-  let count = 0;
-  hand.forEach(i => {
     if (i.id === testTile.id) {
       count++;
     }

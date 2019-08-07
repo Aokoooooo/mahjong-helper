@@ -1,7 +1,7 @@
-import { sortBy } from "lodash";
 import { tileEnumKeys, TileEnumKeyType } from "../enum/tile";
 import { Tile } from "../modal/tile";
 import { isSuo, isTong, isValidTileTypeAcronym, isWan } from "../utils/tile";
+import { sortTiles } from "../utils/hand";
 
 export const parse = (code: string) => {
   if (!code || code.trim() === "") {
@@ -17,8 +17,8 @@ export const parse = (code: string) => {
   let handTiles: Tile[] = convertCodeStringToTileList(handString);
   let fuluTiles: Tile[] = convertCodeStringToTileList(fuluString);
 
-  handTiles = sortBy(handTiles, ["id"]);
-  fuluTiles = sortBy(fuluTiles, ["id"]);
+  handTiles = sortTiles(handTiles);
+  fuluTiles = sortTiles(fuluTiles);
   return { handTiles, fuluTiles };
 };
 
@@ -46,9 +46,9 @@ const convertCodeStringToTileList = (code: string) => {
   return tiles;
 };
 
-export const toCode = (handTiles: Tile[], fuluTiles: Tile[]) => {
-  handTiles = sortBy(handTiles, ["id"]);
-  fuluTiles = sortBy(fuluTiles, ["id"]);
+export const toCode = (handTiles: Tile[], fuluTiles: Tile[] = []) => {
+  handTiles = sortTiles(handTiles);
+  fuluTiles = sortTiles(fuluTiles);
 
   const toCodeHelper = (tiles: Tile[]) => {
     const wan: string[] = [];
@@ -80,5 +80,5 @@ export const toCode = (handTiles: Tile[], fuluTiles: Tile[]) => {
 
   const handString = toCodeHelper(handTiles);
   const fuluString = toCodeHelper(fuluTiles);
-  return `${handString}f${fuluString}`;
+  return fuluString === "" ? handString : `${handString}f${fuluString}`;
 };

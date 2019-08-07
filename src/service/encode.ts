@@ -1,12 +1,12 @@
-import { sortBy } from "lodash";
 import { Tile } from "../modal/tile";
 import { isZi } from "../utils/tile";
+import { sortTiles } from "../utils/hand";
 
 export const encode = (tiles: Tile[]): string => {
   if (!tiles) {
     throw new Error("入参不可为null");
   }
-  tiles = sortBy(tiles, ["id"]);
+  tiles = sortTiles(tiles);
   const quantities: number[] = [];
   const distances: number[] = [];
   let index = 0;

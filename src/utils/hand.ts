@@ -1,6 +1,10 @@
+import { orderBy } from "lodash";
 import { Tile } from "../modal/tile";
 
 export const isTilesValid = (handTiles: Tile[], fuluTiles: Tile[]) => {
+  handTiles = sortTiles(handTiles);
+  fuluTiles = sortTiles(fuluTiles);
+
   // 同种牌数量上限
   const checkMap = new Map<number, number>();
   for (const i of handTiles) {
@@ -35,4 +39,8 @@ export const isTilesValid = (handTiles: Tile[], fuluTiles: Tile[]) => {
   if (fuluTiles.length - gangNum + handTiles.length !== 14) {
     throw new Error("错误的手牌数量");
   }
+};
+
+export const sortTiles = (tiles: Tile[]): Tile[] => {
+  return orderBy(tiles, ["id"]);
 };

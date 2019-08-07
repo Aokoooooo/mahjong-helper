@@ -1,6 +1,5 @@
-import { sortBy } from "lodash";
 import { parse, toCode } from "../service/parse";
-import { isTilesValid } from "../utils/hand";
+import { isTilesValid, sortTiles } from "../utils/hand";
 import { Tile } from "./tile";
 
 export class Hand {
@@ -26,7 +25,7 @@ export class Hand {
   }
 
   public sortTiles() {
-    this.hand = sortBy(this.hand, ["id"]);
-    this.fulu = sortBy(this.fulu, ["id"]);
+    this.hand = sortTiles(this.hand);
+    this.fulu = sortTiles(this.fulu);
   }
 }
