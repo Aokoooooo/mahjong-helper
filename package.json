@@ -52,6 +52,7 @@
     "readme.md"
   ],
   "dependencies": {
+    "commander": "^2.20.0",
     "lodash": "^4.17.15"
   }
 }

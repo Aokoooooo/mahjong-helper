@@ -8,6 +8,7 @@ export {
   isValidTileTypeAcronym
 } from "./utils/tile";
 export { isTilesValid, sortTiles } from "./utils/hand";
+export { printSuggests } from "./utils/suggest";
 export {
   tileEnum,
   tileEnumKeys,

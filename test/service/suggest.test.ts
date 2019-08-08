@@ -181,17 +181,6 @@ const reformatResult = (suggests: Suggest[]) => {
   );
 };
 
-const printSuggests = (code: string, showDetails: boolean = false): void => {
-  const suggests = suggest(Hand.fromCode(code));
-  if (typeof suggests === "string") {
-    console.log(suggests);
-  } else {
-    suggests.forEach(i => {
-      console.log(showDetails ? i : [i.discard.acronym, i.count]);
-    });
-  }
-};
-
 interface ICodes {
   [key: string]: ICodeItem[];
 }
