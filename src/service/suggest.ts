@@ -50,6 +50,10 @@ const suggestHelper = (
   fulu: Tile[]
 ): void => {
   const tile = hand[index];
+  // 跳过重复切牌
+  if (suggests.some(i => i.discard.id === tile.id)) {
+    return;
+  }
   let tempXiangTing = xiangTing;
   const suggest = new Suggest(tile, 0, new Map(), xiangTing, xiangTing);
 

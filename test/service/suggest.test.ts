@@ -29,6 +29,14 @@ describe("service-suggest", () => {
       ],
       "1": [
         {
+          key: "123357m6678p2256s",
+          value: [
+            { key: Tile.create("m3"), value: 12 },
+            { key: Tile.create("m7"), value: 12 },
+            { key: Tile.create("p6"), value: 16 }
+          ]
+        },
+        {
           key: "36s116zf123456789p",
           value: [
             { key: Tile.create("s3"), value: 24 },
