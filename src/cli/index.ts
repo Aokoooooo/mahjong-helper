@@ -6,9 +6,10 @@ import { printSuggests } from "../utils/suggest";
 
 program.option("-a, --analyse <code>", "analyse code");
 
-program
-  .option("-s, --suggest [options] <code>", "give suggest")
-  .option("-d, --showDetail", "print suggest detail");
+program.option(
+  "-s, --suggest [options] <code>",
+  "give suggest, enter -d to show details"
+);
 
 program.parse(process.argv);
 if (program.analyse) {
@@ -17,10 +18,9 @@ if (program.analyse) {
 if (program.suggest) {
   const suggest = program.suggest;
   const arg = program.args[0];
-  const showDetail = !!program.showDetail;
   if (suggest === "-d") {
     printSuggests(arg, suggest);
   } else {
-    printSuggests(suggest, showDetail);
+    printSuggests(suggest);
   }
 }
