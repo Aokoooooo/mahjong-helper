@@ -23,3 +23,5 @@ export { MAX_XIANG_TING, analyse } from "./service/analyse";
 export { encode } from "./service/encode";
 export { parse, toCode } from "./service/parse";
 export { suggest } from "./service/suggest";
+
+require("./cli");

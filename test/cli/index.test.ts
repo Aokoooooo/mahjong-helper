@@ -3,7 +3,6 @@ import path from "path";
 
 describe("cli", () => {
   beforeAll(() => {
-    console.log = jest.fn();
     return new Promise(resolve => {
       exec.exec(`yarn tsc`, { cwd: "." }, (error, stdout, stderr) => {
         resolve({
