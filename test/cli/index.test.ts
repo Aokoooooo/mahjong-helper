@@ -33,7 +33,7 @@ describe("cli", () => {
     expect(stdout).toEqual("切:① 向听:0->-1 进张:3; ②(3) \n");
   });
   test("test -s -d", async () => {
-    const { stdout } = await cli(["-s", "12pf111p123456789m", "-d"]);
+    const { stdout } = await cli(["-s", "-d", "12pf111p123456789m"]);
     expect(stdout).toEqual("切:① 向听:0->-1 进张:3; ②(3) \n");
   });
 });
