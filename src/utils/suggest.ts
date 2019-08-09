@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import { Hand } from "../modal/hand";
 import { Suggest } from "../modal/suggest";
 import { suggest } from "../service/suggest";

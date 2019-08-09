@@ -1,4 +1,4 @@
-import { orderBy } from "lodash";
+import orderBy from "lodash/orderBy";
 import { Tile } from "../modal/tile";
 
 export const isTilesValid = (handTiles: Tile[], fuluTiles: Tile[]) => {

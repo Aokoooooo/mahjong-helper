@@ -1,4 +1,4 @@
-import { orderBy } from "lodash";
+import orderBy from "lodash/orderBy";
 import { Hand, Suggest, suggest, Tile } from "../../src";
 
 describe("service-suggest", () => {
