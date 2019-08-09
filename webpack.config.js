@@ -1,5 +1,4 @@
 const path = require("path");
-const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 module.exports = {
   entry: "./dist/index.js",
@@ -8,6 +7,5 @@ module.exports = {
   output: {
     filename: "mahjong-helper.min.js",
     path: path.resolve(__dirname, "min")
-  },
-  plugins: [new LodashModuleReplacementPlugin()]
+  }
 };
