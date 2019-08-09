@@ -6,7 +6,7 @@ module.exports = {
   target: "node",
   mode: "production",
   output: {
-    filename: "hahjong-helper.min.js",
+    filename: "mahjong-helper.min.js",
     path: path.resolve(__dirname, "min")
   },
   plugins: [new LodashModuleReplacementPlugin()]
