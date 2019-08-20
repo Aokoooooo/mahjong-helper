@@ -44,7 +44,6 @@ export const encode = (tiles: Tile[]): string => {
         // 如果已经是最后一张牌,写入距离3
         if (i === tiles.length - 1) {
           distances.push(3);
-          break;
         }
         break;
       }

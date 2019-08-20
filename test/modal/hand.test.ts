@@ -2,8 +2,8 @@ import { Hand, Tile, TileEnumKeyType } from "../../src";
 
 describe("modal-hand", () => {
   test("code should not be blank", () => {
-    expect(Hand.fromCode).toThrow("code should not be blank");
-    expect(() => Hand.fromCode("")).toThrow("code should not be blank");
+    expect(Hand.fromCode).toThrow("输入不可为空");
+    expect(() => Hand.fromCode("")).toThrow("输入不可为空");
   });
   test("formCode work well", () => {
     const code = "12345678999mf7777z";

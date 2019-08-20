@@ -4,9 +4,6 @@ import { Tile } from "./tile";
 
 export class Hand {
   public static fromCode(code: string) {
-    if (!code || code.trim() === "") {
-      throw new Error("code should not be blank");
-    }
     const { handTiles, fuluTiles } = parse(code);
     return new Hand(handTiles, fuluTiles);
   }
