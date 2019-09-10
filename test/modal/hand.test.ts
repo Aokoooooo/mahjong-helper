@@ -46,7 +46,7 @@ describe("modal-hand", () => {
   });
   test("same kind of tile can't exceed 4", () => {
     const incorrectCode = "11111678m123456s";
-    expect(() => Hand.fromCode(incorrectCode)).toThrow("同种牌最多可有五张");
+    expect(() => Hand.fromCode(incorrectCode)).toThrow("同种牌最多可有四张");
   });
   test("the sum of tiles should be 14", () => {
     const incorrectCode = "111122223333444m";

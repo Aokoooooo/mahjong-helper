@@ -15,7 +15,7 @@ export const isTilesValid = (handTiles: Tile[], fuluTiles: Tile[]) => {
   }
   for (const i of checkMap) {
     if (i[1] > 4) {
-      throw new Error("同种牌最多可有五张");
+      throw new Error("同种牌最多可有四张");
     }
   }
 
