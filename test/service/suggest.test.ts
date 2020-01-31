@@ -1,5 +1,6 @@
-import orderBy from "lodash/orderBy";
+import R from "ramda";
 import { Hand, Suggest, suggest, Tile } from "../../src";
+import { sortDiscardFn } from "../../src/service/suggest";
 
 describe("service-suggest", () => {
   test("input params can't be null", () => {
@@ -8,10 +9,10 @@ describe("service-suggest", () => {
   test("suggest work well", () => {
     const codes: ICodes = {
       "-1": [
-        { key: "234444m22p123s666z", value: "荣和" },
-        { key: "11sf123456m123456p", value: "荣和" },
-        { key: "12344sf123456m123p", value: "荣和" },
-        { key: "11155mf1111p111222z", value: "荣和" }
+        { key: "234444m22p123s666z", value: [] },
+        { key: "11sf123456m123456p", value: [] },
+        { key: "12344sf123456m123p", value: [] },
+        { key: "11155mf1111p111222z", value: [] }
       ],
       "0": [
         {
@@ -146,40 +147,37 @@ describe("service-suggest", () => {
           ]
         }
       ]
-      //   "4": [
-      //     "147m147p14s",
-      //     "1234567z1p",
-      //     "127m147p147s11z",
-      //     "347m147p147s11z",
-      //     "146m147p147s11z"
-      //   ],
-      //   "5": [
-      //     "147m147p147s11z",
-      //     "258m228p12345z",
-      //     "458m258p12345z",
-      //     "248m258p12345z",
-      //     "128m258p12345z",
-      //     "1238m258p2234567z"
-      //   ],
-      //   "6": ["147m147p147s14z", "258m258p12345z", "1238m258p1234567z"],
-      //   "7": ["117m147p147s12345z", "145m147p147s12345z", "146m147p147s12345z"],
-      //   "8": ["147m147p147s12345z", "1234567z259m259p6s"]
+      // "4": [
+      //   "147m147p14s",
+      //   "1234567z1p",
+      //   "127m147p147s11z",
+      //   "347m147p147s11z",
+      //   "146m147p147s11z"
+      // ],
+      // "5": [
+      //   "147m147p147s11z",
+      //   "258m228p12345z",
+      //   "458m258p12345z",
+      //   "248m258p12345z",
+      //   "128m258p12345z",
+      //   "1238m258p2234567z"
+      // ],
+      // "6": ["147m147p147s14z", "258m258p12345z", "1238m258p1234567z"],
+      // "7": ["117m147p147s12345z", "145m147p147s12345z", "146m147p147s12345z"],
+      // "8": ["147m147p147s12345z", "1234567z259m259p6s"]
     };
     Object.keys(codes).forEach(xiangTing => {
       codes[xiangTing].forEach(i => {
         const result = suggest(Hand.fromCode(i.key));
-        if (typeof result === "string") {
-          expect(result).toEqual(i.value);
-        } else {
-          expect(reformatResult(result)).toEqual(i.value);
-        }
+
+        expect(reformatResult(result)).toEqual(sortReformatedCodeItem(i.value));
       });
     });
   });
 });
 
 const reformatResult = (suggests: Suggest[]) => {
-  return orderBy(suggests, ["discard.id"]).map(
+  return suggests.map(
     (i): IReformatedCodeItem => {
       return {
         key: i.discard,
@@ -189,13 +187,18 @@ const reformatResult = (suggests: Suggest[]) => {
   );
 };
 
+const sortReformatedCodeItem = R.sortWith<IReformatedCodeItem>([
+  R.descend(R.prop("value")),
+  R.descend(v => sortDiscardFn(v.key))
+]);
+
 interface ICodes {
   [key: string]: ICodeItem[];
 }
 
 interface ICodeItem {
   key: string;
-  value: string | IReformatedCodeItem[];
+  value: IReformatedCodeItem[];
 }
 
 interface IReformatedCodeItem {

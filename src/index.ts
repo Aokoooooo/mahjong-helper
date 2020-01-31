@@ -8,7 +8,6 @@ export {
   isValidTileTypeAcronym
 } from "./utils/tile";
 export { isTilesValid, sortTiles } from "./utils/hand";
-export { printSuggests } from "./utils/suggest";
 export {
   tileEnum,
   tileEnumKeys,
@@ -22,6 +21,4 @@ export { Suggest } from "./modal/suggest";
 export { MAX_XIANG_TING, analyse } from "./service/analyse";
 export { encode } from "./service/encode";
 export { parse, toCode } from "./service/parse";
-export { suggest } from "./service/suggest";
-
-require("./cli");
+export { suggest, sortSuggest } from "./service/suggest";

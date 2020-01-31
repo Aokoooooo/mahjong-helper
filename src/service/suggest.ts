@@ -1,4 +1,4 @@
-import orderBy from "lodash/orderBy";
+import R from "ramda";
 import { tileEnum, tileEnumKeys } from "../enum/tile";
 import { Hand } from "../modal/hand";
 import { Suggest } from "../modal/suggest";
@@ -7,39 +7,38 @@ import { isSuo, isWan, isZi } from "../utils/tile";
 import { analyse } from "./analyse";
 import { encode } from "./encode";
 
-export const suggest = (hands: Hand): Suggest[] | string => {
+export const suggest = (hands: Hand): Suggest[] => {
   if (!hands || hands.hand.length <= 0) {
     throw new Error("输入不可为空");
   }
   const { hand, fulu } = hands;
   const code = encode(hand);
   const xiangTing = analyse(code);
-  if (xiangTing < 0) {
-    return "荣和";
-  }
   const suggests: Suggest[] = [];
+  if (xiangTing < 0) {
+    return [];
+  }
   for (let i = 0; i < hand.length; i++) {
     suggestHelper(hand, i, xiangTing, suggests, fulu);
   }
-  return orderBy(
-    suggests,
-    [
-      "count",
-      s => {
-        const x = s.discard;
-        if (isZi(x)) {
-          return 5;
-        } else if (isSuo(x)) {
-          return Math.abs(x.id - tileEnum.s5.id);
-        } else if (isWan(x)) {
-          return Math.abs(x.id - tileEnum.m5.id);
-        } else {
-          return Math.abs(x.id - tileEnum.p5.id);
-        }
-      }
-    ],
-    ["desc", "desc"]
-  );
+  return sortSuggest(suggests);
+};
+
+export const sortSuggest = R.sortWith<Suggest>([
+  R.descend(R.prop("count")),
+  R.descend(s => sortDiscardFn(s.discard))
+]);
+
+export const sortDiscardFn = (discard: Tile) => {
+  if (isZi(discard)) {
+    return 5;
+  } else if (isSuo(discard)) {
+    return Math.abs(discard.id - tileEnum.s5.id);
+  } else if (isWan(discard)) {
+    return Math.abs(discard.id - tileEnum.m5.id);
+  } else {
+    return Math.abs(discard.id - tileEnum.p5.id);
+  }
 };
 
 const suggestHelper = (

@@ -1,4 +1,4 @@
-import orderBy from "lodash/orderBy";
+import R from "ramda";
 import { Tile } from "../modal/tile";
 
 export const isTilesValid = (handTiles: Tile[], fuluTiles: Tile[]) => {
@@ -41,6 +41,4 @@ export const isTilesValid = (handTiles: Tile[], fuluTiles: Tile[]) => {
   }
 };
 
-export const sortTiles = (tiles: Tile[]): Tile[] => {
-  return orderBy(tiles, ["id"]);
-};
+export const sortTiles = R.sortBy<Tile>(R.prop<Tile, keyof Tile>("id"));

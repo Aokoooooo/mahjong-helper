@@ -1,7 +1,7 @@
 {
   "author": {
     "name": "Aoko",
-    "email": "hejunqin233@gmail.com"
+    "email": "aokodesuka@gmail.com"
   },
   "name": "mahjong-helper",
   "version": "0.0.4",
@@ -14,9 +14,12 @@
     "lint": "cross-env yarn prettier && tslint --fix 'src/**/*.ts'&& tslint --fix 'test/**/*.ts'",
     "prepublishOnly": "cross-env node ./scripts/prepublish.js && yarn tsc && yarn webpack"
   },
+  "dependencies": {
+    "ramda": "^0.26.1"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.15",
-    "@types/lodash": "^4.14.136",
+    "@types/ramda": "types/npm-ramda#dist",
     "cross-env": "^5.2.0",
     "husky": "^3.0.1",
     "jest": "^24.8.0",
@@ -25,7 +28,7 @@
     "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.3",
+    "typescript": "^3.7.5",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
   },
@@ -52,9 +55,5 @@
     "LICENSE",
     "package.json",
     "readme.md"
-  ],
-  "dependencies": {
-    "commander": "^2.20.0",
-    "lodash": "^4.17.15"
-  }
+  ]
 }
