@@ -13,7 +13,9 @@
     "moduleResolution": "node",
     "downlevelIteration": true,
     "jsx": "react",
-    "lib": ["es6"]
+    "lib": ["es6"],
+    "watch": true,
+    "sourceMap": true
   },
   "include": ["src/**/*.ts"]
 }
