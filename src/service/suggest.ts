@@ -1,4 +1,4 @@
-import R from "ramda";
+import orderBy from "lodash/orderBy";
 import { tileEnum, tileEnumKeys } from "../enum/tile";
 import { Hand } from "../modal/hand";
 import { Suggest } from "../modal/suggest";
@@ -24,10 +24,8 @@ export const suggest = (hands: Hand): Suggest[] | null => {
   return sortSuggest(suggests);
 };
 
-export const sortSuggest = R.sortWith<Suggest>([
-  R.descend(R.prop("count")),
-  R.descend(s => sortDiscardFn(s.discard))
-]);
+export const sortSuggest = (suggests: Suggest[]) =>
+  orderBy(suggests, ["count", s => sortDiscardFn(s.discard)], ["desc", "desc"]);
 
 export const sortDiscardFn = (discard: Tile) => {
   if (isZi(discard)) {

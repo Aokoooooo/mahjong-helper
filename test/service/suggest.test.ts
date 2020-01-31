@@ -1,4 +1,4 @@
-import R from "ramda";
+import orderBy from "lodash/orderBy";
 import { Hand, Suggest, suggest, Tile } from "../../src";
 import { sortDiscardFn } from "../../src/service/suggest";
 
@@ -190,10 +190,9 @@ const reformatResult = (suggests: Suggest[] | null) => {
     : null;
 };
 
-const sortReformatedCodeItem = R.sortWith<IReformatedCodeItem>([
-  R.descend(R.prop("value")),
-  R.descend(v => sortDiscardFn(v.key))
-]);
+const sortReformatedCodeItem = (items: IReformatedCodeItem[]) => {
+  return orderBy(items, ["value", v => sortDiscardFn(v.key)], ["desc", "desc"]);
+};
 
 interface ICodes {
   [key: string]: ICodeItem[];
