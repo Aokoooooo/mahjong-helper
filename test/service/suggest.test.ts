@@ -9,10 +9,10 @@ describe("service-suggest", () => {
   test("suggest work well", () => {
     const codes: ICodes = {
       "-1": [
-        { key: "234444m22p123s666z", value: [] },
-        { key: "11sf123456m123456p", value: [] },
-        { key: "12344sf123456m123p", value: [] },
-        { key: "11155mf1111p111222z", value: [] }
+        { key: "234444m22p123s666z", value: null },
+        { key: "11sf123456m123456p", value: null },
+        { key: "12344sf123456m123p", value: null },
+        { key: "11155mf1111p111222z", value: null }
       ],
       "0": [
         {
@@ -169,22 +169,25 @@ describe("service-suggest", () => {
     Object.keys(codes).forEach(xiangTing => {
       codes[xiangTing].forEach(i => {
         const result = suggest(Hand.fromCode(i.key));
-
-        expect(reformatResult(result)).toEqual(sortReformatedCodeItem(i.value));
+        expect(reformatResult(result)).toEqual(
+          i.value ? sortReformatedCodeItem(i.value) : i.value
+        );
       });
     });
   });
 });
 
-const reformatResult = (suggests: Suggest[]) => {
-  return suggests.map(
-    (i): IReformatedCodeItem => {
-      return {
-        key: i.discard,
-        value: i.count
-      };
-    }
-  );
+const reformatResult = (suggests: Suggest[] | null) => {
+  return suggests
+    ? suggests.map(
+        (i): IReformatedCodeItem => {
+          return {
+            key: i.discard,
+            value: i.count
+          };
+        }
+      )
+    : null;
 };
 
 const sortReformatedCodeItem = R.sortWith<IReformatedCodeItem>([
@@ -198,7 +201,7 @@ interface ICodes {
 
 interface ICodeItem {
   key: string;
-  value: IReformatedCodeItem[];
+  value: (IReformatedCodeItem[]) | null;
 }
 
 interface IReformatedCodeItem {

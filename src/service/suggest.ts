@@ -7,17 +7,17 @@ import { isSuo, isWan, isZi } from "../utils/tile";
 import { analyse } from "./analyse";
 import { encode } from "./encode";
 
-export const suggest = (hands: Hand): Suggest[] => {
+export const suggest = (hands: Hand): Suggest[] | null => {
   if (!hands || hands.hand.length <= 0) {
     throw new Error("输入不可为空");
   }
   const { hand, fulu } = hands;
   const code = encode(hand);
   const xiangTing = analyse(code);
-  const suggests: Suggest[] = [];
   if (xiangTing < 0) {
-    return [];
+    return null;
   }
+  const suggests: Suggest[] = [];
   for (let i = 0; i < hand.length; i++) {
     suggestHelper(hand, i, xiangTing, suggests, fulu);
   }
@@ -122,5 +122,5 @@ const isValidCandidate = (
       count++;
     }
   });
-  return count !== 4;
+  return count < 4;
 };
