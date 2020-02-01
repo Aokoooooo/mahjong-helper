@@ -2,6 +2,10 @@ import { Tile } from "../modal/tile";
 import { sortTiles } from "../utils/hand";
 import { isZi } from "../utils/tile";
 
+/**
+ * 将手牌压缩为特征码
+ * @param tiles 手牌数组
+ */
 export const encode = (tiles: Tile[]): string => {
   if (!tiles) {
     throw new Error("入参不可为null");
@@ -73,6 +77,13 @@ export const encode = (tiles: Tile[]): string => {
   return featureCode;
 };
 
+/**
+ * 计算两张牌之间的距离.
+ * 同种牌数字大小之差为距离,超出3取3.
+ * 不同种牌,字牌之间的距离为3
+ * @param firstTile 前一张牌
+ * @param nextTile 后一张牌
+ */
 const calculateDiff = (firstTile: Tile, nextTile: Tile): number => {
   let diff = 3;
   if (isZi(firstTile)) {

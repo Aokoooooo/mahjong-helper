@@ -25,7 +25,11 @@ export const isZi = (tile: Tile) => {
   return isFeng(tile) || isSanyuan(tile);
 };
 
-const tileTypeAcronym = ["s", "m", "p", "z"];
+const tileTypeAcronym = ["m", "p", "s", "z"];
+/**
+ * 判断是否为合法的缩写字母
+ * @param acronym 缩写字母
+ */
 export const isValidTileTypeAcronym = (acronym: string) => {
   return tileTypeAcronym.includes(acronym);
 };

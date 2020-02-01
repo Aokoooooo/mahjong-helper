@@ -1,3 +1,6 @@
+/**
+ * 牌型枚举
+ */
 export const tileEnum = {
   m1: { id: 0x01, name: "一" },
   m2: { id: 0x02, name: "二" },
@@ -38,8 +41,20 @@ export const tileEnum = {
   z7: { id: 0x37, name: "中" }
 };
 
+/**
+ * 牌型缩写数组
+ */
 export const tileEnumKeys = Object.keys(tileEnum) as TileEnumKeyType[];
+/**
+ * 牌型值数组
+ */
 export const tileEnumValues = Object.values(tileEnum);
 
+/**
+ * 牌型缩写类型
+ */
 export type TileEnumKeyType = keyof typeof tileEnum;
+/**
+ * 牌型值类型
+ */
 export type TileEnumValueType = typeof tileEnum[TileEnumKeyType];
