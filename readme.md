@@ -26,6 +26,7 @@
    - `isSanyuan(tile:Tile) => boolean`
    - `isZi(tile:Tile) => boolean`
    - `isValidTileTypeAcronym(acronym:string) => boolean`
+   - `isSameType(tile1: Tile, tile2: Tile) => boolean`
    - `isTilesValid(handTiles:Tile[], fuluTiles:Tile[]) => boolean`
    - `sortTiles(tiles: Tile[]) => Tile[]`
    - `sortSuggest(suggests:Suggest[]) => Suggest[]`

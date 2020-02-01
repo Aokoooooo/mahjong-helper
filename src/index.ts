@@ -5,7 +5,8 @@ export {
   isFeng,
   isSanyuan,
   isZi,
-  isValidTileTypeAcronym
+  isValidTileTypeAcronym,
+  isSameType
 } from "./utils/tile";
 export { isTilesValid, sortTiles } from "./utils/hand";
 export {
