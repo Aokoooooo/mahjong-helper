@@ -2,16 +2,16 @@
  * 计算基础点数
  * @param han 番
  * @param fu 符
- * @param yakuManTimes 役满倍数
+ * @param yakumanTimes 役满倍数
  */
 export const calculateBasePoint = (
   han: number,
   fu: number,
-  yakuManTimes: number
+  yakumanTimes: number
 ) => {
   // 各种倍役满
-  if (yakuManTimes) {
-    return 8000 * yakuManTimes;
+  if (yakumanTimes) {
+    return 8000 * yakumanTimes;
   }
   // 累计役满
   if (han >= 13) {
@@ -43,16 +43,16 @@ export const calculateBasePoint = (
  * 计算荣和点数
  * @param han 番
  * @param fu 符
- * @param yakuManTimes 役满倍数
+ * @param yakumanTimes 役满倍数
  * @param isParent 是否为亲家
  */
 export const calculateRonPoint = (
   han: number,
   fu: number,
-  yakuManTimes: number,
+  yakumanTimes: number,
   isParent?: boolean
 ) => {
-  const basicPoint = calculateBasePoint(han, fu, yakuManTimes);
+  const basicPoint = calculateBasePoint(han, fu, yakumanTimes);
   return isParent
     ? pointRoundUp100(basicPoint * 6)
     : pointRoundUp100(basicPoint * 4);
@@ -62,14 +62,14 @@ export const calculateRonPoint = (
  * 计算被自摸时的支付点数
  * @param han 番
  * @param fu 符
- * @param yakuManTimes 役满倍数
+ * @param yakumanTimes 役满倍数
  */
 export const calculateSumoPayPoint = (
   han: number,
   fu: number,
-  yakuManTimes: number
+  yakumanTimes: number
 ) => {
-  const basicPoint = calculateBasePoint(han, fu, yakuManTimes);
+  const basicPoint = calculateBasePoint(han, fu, yakumanTimes);
   return {
     child: pointRoundUp100(basicPoint),
     parent: pointRoundUp100(basicPoint * 2)
