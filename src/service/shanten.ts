@@ -32,7 +32,7 @@ export const calculateShanten = (encodedStr: string): number => {
 
 /**
  * 计算七对子向听数.七对子向听数 = 6-对子数+max(0,7-种类数)
- * 若无法构成这两种牌型择返回最大向听数:8
+ * 若无法构成这种牌型择返回最大向听数:8
  * @param tiles 简码拆分后整型数组
  * @param leftTiles 剩余手牌数量
  */
