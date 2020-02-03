@@ -34,7 +34,7 @@ export const calculateBasePoint = (
     return 2000;
   }
   // 算符
-  const basicPoint = fu * (1 << (2 + han));
+  const basicPoint = fu * Math.pow(2, 2 + han);
   // 是否已经满贯
   return basicPoint > 2000 ? 2000 : basicPoint;
 };

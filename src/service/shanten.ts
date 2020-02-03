@@ -22,16 +22,39 @@ export const calculateShanten = (encodedStr: string): number => {
   }
   // 理论需完成面子数
   requiredMianZi /= 3;
-  return Math.min(MAX_SHAN_TEN, getPair(tiles, requiredMianZi, leftTiles));
+
+  return Math.min(
+    MAX_SHAN_TEN,
+    calculateBaseShanten(tiles, requiredMianZi, leftTiles),
+    calculateChiitoiShanten(tiles, leftTiles)
+  );
 };
 
 /**
- * 取雀头
+ * 计算七对子向听数.七对子向听数 = 6-对子数+max(0,7-种类数)
+ * 若无法构成这两种牌型择返回最大向听数:8
+ * @param tiles 简码拆分后整型数组
+ * @param leftTiles 剩余手牌数量
+ */
+const calculateChiitoiShanten = (tiles: number[], leftTiles: number) => {
+  if (leftTiles !== 14) {
+    return MAX_SHAN_TEN;
+  }
+  let pairNum = 0;
+  const kindNum = tiles.length / 2;
+  for (let i = 0; i < tiles.length; i += 2) {
+    pairNum += Math.floor(tiles[i] / 2);
+  }
+  return 6 - pairNum + Math.max(0, 7 - kindNum);
+};
+
+/**
+ * 排除七对子,国士无双,计算向听数
  * @param tiles 简码拆分后整型数组
  * @param requiredMianZi 需完成的面子数量
  * @param leftTiles 剩余手牌数量
  */
-const getPair = (
+const calculateBaseShanten = (
   tiles: number[],
   requiredMianZi: number,
   leftTiles: number

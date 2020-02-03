@@ -55,13 +55,20 @@ describe("service-analyse", () => {
         "458m258p12345z",
         "248m258p12345z",
         "128m258p12345z",
-        "1238m258p2234567z"
+        "1238m258p2234567z",
+        "117m147p147s12345z"
       ],
-      "6": ["147m147p147s14z", "258m258p12345z", "1238m258p1234567z"],
-      "7": ["117m147p147s12345z", "145m147p147s12345z", "146m147p147s12345z"],
-      "8": ["147m147p147s12345z", "1234567z259m259p6s"]
+      "6": [
+        "147m147p147s14z",
+        "258m258p12345z",
+        "1238m258p1234567z",
+        "145m147p147s12345z",
+        "146m147p147s12345z",
+        "147m147p147s12345z",
+        "1234567z259m259p6s"
+      ]
     };
-    // shanten = 2(requiredMianZi - mianZiNum) - subMianZiNum - hasPair;
+    // shanten = 2(requiredMianZi - mianZiNum) - subMianZiNum - hasPair || 6-对子数+max(0,7-种类数);
     Object.keys(codes).forEach(shanten => {
       codes[shanten].forEach(i => {
         expect(calculateShanten(encode(parse(i).handTiles))).toEqual(
