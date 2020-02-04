@@ -1,4 +1,4 @@
-export const MAX_SHAN_TEN = 8;
+export const MAX_SHAN_TEN = 6;
 
 /**
  * 根据特征码计算当前手牌向听数
