@@ -1,7 +1,12 @@
+type TileEnumType = Record<
+  string,
+  { id: number; name: string; isRedDora?: boolean }
+>;
 /**
  * 牌型枚举
  */
-export const tileEnum = {
+export const tileEnum: TileEnumType = {
+  m0: { id: 0x05, name: "五", isRedDora: true },
   m1: { id: 0x01, name: "一" },
   m2: { id: 0x02, name: "二" },
   m3: { id: 0x03, name: "三" },
@@ -12,6 +17,7 @@ export const tileEnum = {
   m8: { id: 0x08, name: "八" },
   m9: { id: 0x09, name: "九" },
 
+  p0: { id: 0x15, name: "⑤", isRedDora: true },
   p1: { id: 0x11, name: "①" },
   p2: { id: 0x12, name: "②" },
   p3: { id: 0x13, name: "③" },
@@ -22,6 +28,7 @@ export const tileEnum = {
   p8: { id: 0x18, name: "⑧" },
   p9: { id: 0x19, name: "⑨" },
 
+  s0: { id: 0x25, name: "5", isRedDora: true },
   s1: { id: 0x21, name: "1" },
   s2: { id: 0x22, name: "2" },
   s3: { id: 0x23, name: "3" },

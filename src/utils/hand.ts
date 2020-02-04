@@ -47,5 +47,5 @@ export const isTilesValid = (handTiles: Tile[], fuluTiles: Tile[]) => {
  * @param tiles 牌的数组
  */
 export const sortTiles = (tiles: Tile[]): Tile[] => {
-  return orderBy(tiles, ["id"]);
+  return orderBy(tiles, ["id", t => (t.isRedDora ? 0 : 1)]);
 };

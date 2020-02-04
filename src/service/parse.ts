@@ -1,7 +1,13 @@
 import { tileEnumKeys, TileEnumKeyType } from "../enum/tile";
 import { Tile } from "../modal/tile";
 import { sortTiles } from "../utils/hand";
-import { isSuo, isTong, isValidTileTypeAcronym, isWan } from "../utils/tile";
+import {
+  isSuo,
+  isTong,
+  isValidTileTypeAcronym,
+  isWan,
+  isZi
+} from "../utils/tile";
 
 /**
  * 将简码转换为手牌数组和副露数组
@@ -31,14 +37,12 @@ export const parse = (code: string) => {
  * @param code 简码
  */
 const parseHelper = (code: string) => {
-  let type = "?";
   const tiles: Tile[] = [];
   let temp: string[] = [];
   for (const i of code) {
     if (isValidTileTypeAcronym(i)) {
-      type = i;
       for (const j of temp) {
-        const key = `${type}${j}` as TileEnumKeyType;
+        const key = `${i}${j}` as TileEnumKeyType;
         if (!tileEnumKeys.includes(key)) {
           throw new Error(`错误的牌型: ${key}`);
         }
@@ -73,19 +77,22 @@ export const toCode = (handTiles: Tile[], fuluTiles: Tile[] = []) => {
  * @param tiles 手牌数组
  */
 const toCodeHelper = (tiles: Tile[]) => {
+  const getAcronymSubstring = (tile: Tile) => {
+    return tile.isRedDora ? "0" : tile.acronym.substring(1);
+  };
   const wan: string[] = [];
   const suo: string[] = [];
   const tong: string[] = [];
   const zi: string[] = [];
   tiles.forEach(i => {
     if (isWan(i)) {
-      wan.push(i.acronym.substring(1));
+      wan.push(getAcronymSubstring(i));
     } else if (isSuo(i)) {
-      suo.push(i.acronym.substring(1));
+      suo.push(getAcronymSubstring(i));
     } else if (isTong(i)) {
-      tong.push(i.acronym.substring(1));
+      tong.push(getAcronymSubstring(i));
     } else {
-      zi.push(i.acronym.substring(1));
+      zi.push(getAcronymSubstring(i));
     }
   });
   const wanStr = `${wan.join("")}${wan.length ? "m" : ""}`;

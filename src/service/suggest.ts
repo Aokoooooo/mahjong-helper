@@ -51,25 +51,28 @@ const suggestHelper = (
   let tempXiangTing = shanten;
   const suggest = new Suggest(tile, 0, new Map(), shanten, shanten);
 
-  tileEnumKeys.forEach(key => {
-    const cursor = Tile.create(key);
-    // 跳过重复进张
-    if (cursor.id === tile.id) {
-      return;
-    }
-    // 防止进张后单类牌数量大于4
-    if (!isValidCandidate(hand, fulu, cursor)) {
-      return;
-    }
-    hand[index] = Tile.create(key);
-    const code = encode(hand);
-    tempXiangTing = calculateShanten(code);
-    // 有效进张
-    if (tempXiangTing < shanten) {
-      countPotentialTiles(suggest, hand, cursor, fulu);
-    }
-    hand[index] = tile;
-  });
+  tileEnumKeys
+    // 跳过重复的红dora牌
+    .filter(i => !tileEnum[i].isRedDora)
+    .forEach(key => {
+      const cursor = Tile.create(key);
+      // 跳过重复进张
+      if (cursor.id === tile.id) {
+        return;
+      }
+      // 防止进张后单类牌数量大于4
+      if (!isValidCandidate(hand, fulu, cursor)) {
+        return;
+      }
+      hand[index] = Tile.create(key);
+      const code = encode(hand);
+      tempXiangTing = calculateShanten(code);
+      // 有效进张
+      if (tempXiangTing < shanten) {
+        countPotentialTiles(suggest, hand, cursor, fulu);
+      }
+      hand[index] = tile;
+    });
 
   // 出这张牌能使向听数-1
   if (suggest.count > 0) {
