@@ -1,16 +1,12 @@
 import { tileEnumKeys, TileEnumKeyType } from "../enum/tile";
+import { Mentsu, mentsuType } from "../modal/mentsu";
 import { Tile } from "../modal/tile";
-import { sortTiles } from "../utils/hand";
-import {
-  isSuo,
-  isTong,
-  isValidTileTypeAcronym,
-  isWan,
-  isZi
-} from "../utils/tile";
+import { sortMentsu, sortTiles } from "../utils/hand";
+import { isKantsu, isKoutsu, isShuntsu } from "../utils/mentsu";
+import { isSuo, isTong, isValidTileTypeAcronym, isWan } from "../utils/tile";
 
 /**
- * 将简码转换为手牌数组和副露数组
+ * 将简码转换为手牌数组和面子数组
  * @param code 简码
  */
 export const parse = (code: string) => {
@@ -25,11 +21,40 @@ export const parse = (code: string) => {
     seperatorIndex === -1 ? "" : code.substring(seperatorIndex + 1);
 
   let handTiles: Tile[] = parseHelper(handString);
-  let fuluTiles: Tile[] = parseHelper(fuluString);
+  let fuluTiles: Mentsu[] = parseMentsu(fuluString);
 
   handTiles = sortTiles(handTiles);
-  fuluTiles = sortTiles(fuluTiles);
+  fuluTiles = sortMentsu(fuluTiles);
   return { handTiles, fuluTiles };
+};
+
+/**
+ * 将拆分后的副露简码转换为面子数组
+ * @param fuluString 副露简码
+ */
+const parseMentsu = (fuluString: string) => {
+  // 按照空格拆分
+  const stringList = fuluString.trim().split(" ");
+  const mentsuList: Mentsu[] = [];
+  stringList
+    // 过滤空string
+    .filter(i => i)
+    .forEach(i => {
+      const tiles = parseHelper(i);
+      if (tiles.length !== 3 && tiles.length !== 4) {
+        throw new Error(`副露中的每一组牌必须为3或4张:${i}`);
+      }
+      if (isKantsu(tiles)) {
+        mentsuList.push(Mentsu.create(mentsuType.minkan, tiles));
+      } else if (isKoutsu(tiles)) {
+        mentsuList.push(Mentsu.create(mentsuType.koutsu, tiles));
+      } else if (isShuntsu(tiles)) {
+        mentsuList.push(Mentsu.create(mentsuType.shuntsu, tiles));
+      } else {
+        throw new Error(`副露中的每一组牌必须为顺子,刻子,杠子:${i}`);
+      }
+    });
+  return mentsuList;
 };
 
 /**
@@ -59,21 +84,30 @@ const parseHelper = (code: string) => {
 };
 
 /**
- * 将手牌数组和副露数组转换为简码
+ * 将手牌数组和面子数组转换为简码
  * @param handTiles 手牌数组
- * @param fuluTiles 副露数组
+ * @param fuluTiles 面子数组
  */
-export const toCode = (handTiles: Tile[], fuluTiles: Tile[] = []) => {
+export const toCode = (handTiles: Tile[], fuluTiles: Mentsu[] = []) => {
   handTiles = sortTiles(handTiles);
-  fuluTiles = sortTiles(fuluTiles);
+  fuluTiles = sortMentsu(fuluTiles);
 
   const handString = toCodeHelper(handTiles);
-  const fuluString = toCodeHelper(fuluTiles);
+  const fuluString = convertMentsuToString(fuluTiles);
   return fuluString === "" ? handString : `${handString}f${fuluString}`;
 };
 
 /**
- * 将手牌数组和副露数组转换为简码的工具函数
+ * 将面子数组转换为简码的工具函数
+ * @param fuluTiles 面子数组
+ */
+const convertMentsuToString = (fuluTiles: Mentsu[]) => {
+  const stringList = fuluTiles.map(i => toCodeHelper(i.tiles));
+  return stringList.length ? stringList.join(" ") : "";
+};
+
+/**
+ * 将手牌数组转换为简码的工具函数
  * @param tiles 手牌数组
  */
 const toCodeHelper = (tiles: Tile[]) => {

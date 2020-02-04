@@ -1,4 +1,5 @@
-import { Hand, Tile, TileEnumKeyType } from "../../src";
+import { Hand } from "../../src";
+import { getTileByCodeAndAcronym } from "../service/parse.test";
 
 describe("modal-hand", () => {
   test("code should not be blank", () => {
@@ -8,18 +9,9 @@ describe("modal-hand", () => {
   test("formCode work well", () => {
     const code = "12345678999mf7777z";
     const hand = Hand.fromCode(code);
-    const handTiles: Tile[] = [];
-    for (const i of "12345678999") {
-      const key = `m${i}` as TileEnumKeyType;
-      handTiles.push(Tile.create(key));
-    }
-    const fuluTiles: Tile[] = [];
-    for (const i of "7777") {
-      const key = `z${i}` as TileEnumKeyType;
-      fuluTiles.push(Tile.create(key));
-    }
-    expect(hand.fulu).toEqual(fuluTiles);
-    expect(hand.hand).toEqual(handTiles);
+    const r = getTileByCodeAndAcronym("m", "12345678999", "z", "7777", [3]);
+    expect(hand.fulu).toEqual(r.fuluTiles);
+    expect(hand.hand).toEqual(r.handTiles);
   });
   test("toCode work well", () => {
     const code = "12345678999mf7777z";
@@ -30,17 +22,8 @@ describe("modal-hand", () => {
     const code = "12345678999mf7777z";
     const sortedHand = Hand.fromCode(code);
 
-    const handTiles: Tile[] = [];
-    for (const i of "21453699897") {
-      const key = `m${i}` as TileEnumKeyType;
-      handTiles.push(Tile.create(key));
-    }
-    const fuluTiles: Tile[] = [];
-    for (const i of "7777") {
-      const key = `z${i}` as TileEnumKeyType;
-      fuluTiles.push(Tile.create(key));
-    }
-    const hand = new Hand(handTiles, fuluTiles);
+    const r = getTileByCodeAndAcronym("m", "21453699897", "z", "7777", [3]);
+    const hand = new Hand(r.handTiles, r.fuluTiles);
     hand.sortTiles();
     expect(hand).toEqual(sortedHand);
   });
@@ -55,7 +38,7 @@ describe("modal-hand", () => {
     expect(() => Hand.fromCode(incorrectCode2)).toThrow("错误的手牌数量");
   });
   test("the sum of fulu should be the multiple of 3(regard every gang as 3 tiles.)", () => {
-    const incorrectCode = "11223344pf1111m11s";
-    expect(() => Hand.fromCode(incorrectCode)).toThrow("错误的副露数量");
+    const r = getTileByCodeAndAcronym("p", "11223344", "z", "1111 22", [3, 3]);
+    expect(() => new Hand(r.handTiles, r.fuluTiles)).toThrow("错误的副露数量");
   });
 });

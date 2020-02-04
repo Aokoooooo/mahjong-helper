@@ -9,6 +9,7 @@ export {
   isSameType
 } from "./utils/tile";
 export { isTilesValid, sortTiles } from "./utils/hand";
+export { isKantsu, isKoutsu, isShuntsu } from "./utils/mentsu";
 export {
   tileEnum,
   tileEnumKeys,
@@ -18,6 +19,12 @@ export {
 } from "./enum/tile";
 export { Hand } from "./modal/hand";
 export { Tile } from "./modal/tile";
+export {
+  Mentsu,
+  mentsuType,
+  mentsuTypeKey,
+  mentsuTypeValue
+} from "./modal/mentsu";
 export { Suggest } from "./modal/suggest";
 export { MAX_SHAN_TEN, calculateShanten } from "./service/shanten";
 export { encode } from "./service/encode";

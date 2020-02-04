@@ -1,6 +1,7 @@
 import orderBy from "lodash/orderBy";
 import { tileEnum, tileEnumKeys } from "../enum/tile";
 import { Hand } from "../modal/hand";
+import { Mentsu } from "../modal/mentsu";
 import { Suggest } from "../modal/suggest";
 import { Tile } from "../modal/tile";
 import { isSuo, isWan, isZi } from "../utils/tile";
@@ -41,7 +42,7 @@ const suggestHelper = (
   index: number,
   shanten: number,
   suggests: Suggest[],
-  fulu: Tile[]
+  fulu: Mentsu[]
 ): void => {
   const tile = hand[index];
   // 跳过重复切牌
@@ -92,7 +93,7 @@ const countPotentialTiles = (
   suggest: Suggest,
   hand: Tile[],
   cursor: Tile,
-  fulu: Tile[]
+  fulu: Mentsu[]
 ): void => {
   let count = 0;
   hand.forEach(i => {
@@ -101,9 +102,11 @@ const countPotentialTiles = (
     }
   });
   fulu.forEach(i => {
-    if (i.id === cursor.id) {
-      count++;
-    }
+    i.tiles.forEach(j => {
+      if (j.id === cursor.id) {
+        count++;
+      }
+    });
   });
 
   // 因为当前手牌中已经放入一张目标牌型,所以总数要加一
@@ -120,7 +123,7 @@ const countPotentialTiles = (
  */
 const isValidCandidate = (
   hand: Tile[],
-  fulu: Tile[],
+  fulu: Mentsu[],
   testTile: Tile
 ): boolean => {
   let count = 0;
@@ -130,9 +133,11 @@ const isValidCandidate = (
     }
   });
   fulu.forEach(i => {
-    if (i.id === testTile.id) {
-      count++;
-    }
+    i.tiles.forEach(j => {
+      if (j.id === testTile.id) {
+        count++;
+      }
+    });
   });
   return count < 4;
 };

@@ -1,5 +1,6 @@
 import { parse, toCode } from "../service/parse";
-import { isTilesValid, sortTiles } from "../utils/hand";
+import { isTilesValid, sortMentsu, sortTiles } from "../utils/hand";
+import { Mentsu } from "./mentsu";
 import { Tile } from "./tile";
 
 /**
@@ -22,9 +23,9 @@ export class Hand {
   /**
    * 副露
    */
-  public fulu: Tile[];
+  public fulu: Mentsu[];
 
-  constructor(hand: Tile[], fulu: Tile[]) {
+  constructor(hand: Tile[], fulu: Mentsu[]) {
     isTilesValid(hand, fulu);
     this.hand = hand;
     this.fulu = fulu;
@@ -42,6 +43,6 @@ export class Hand {
    */
   public sortTiles() {
     this.hand = sortTiles(this.hand);
-    this.fulu = sortTiles(this.fulu);
+    this.fulu = sortMentsu(this.fulu);
   }
 }

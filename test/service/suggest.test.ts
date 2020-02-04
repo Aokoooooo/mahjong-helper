@@ -10,23 +10,23 @@ describe("service-suggest", () => {
     const codes: ICodes = {
       "-1": [
         { key: "234444m22p123s666z", value: null },
-        { key: "11sf123456m123456p", value: null },
-        { key: "12344sf123456m123p", value: null },
-        { key: "11155mf1111p111222z", value: null }
+        { key: "11sf123m 456m 123p 456p", value: null },
+        { key: "12344sf123m 456m 123p", value: null },
+        { key: "11155mf1111p 111z 222z", value: null }
       ],
       "0": [
         {
-          key: "45sf123456m123456s",
+          key: "45sf123m 456m 123s 456s",
           value: [
             { key: Tile.create("s4"), value: 2 },
             { key: Tile.create("s5"), value: 2 }
           ]
         },
         {
-          key: "12pf111p123456789m",
+          key: "12pf111p 123m 456m 789m",
           value: [{ key: Tile.create("p1"), value: 3 }]
         },
-        { key: "35zf333555z123456p", value: [] }
+        { key: "35zf333z 555z 123p 456p", value: [] }
       ],
       "1": [
         {
@@ -38,7 +38,7 @@ describe("service-suggest", () => {
           ]
         },
         {
-          key: "36s116zf123456789p",
+          key: "36s116zf123p 456p 789p",
           value: [
             { key: Tile.create("s3"), value: 24 },
             { key: Tile.create("s6"), value: 24 },
@@ -46,7 +46,7 @@ describe("service-suggest", () => {
           ]
         },
         {
-          key: "22346zf3334447777z",
+          key: "22346zf333z 444z 7777z",
           value: [
             { key: Tile.create("z3"), value: 5 },
             { key: Tile.create("z4"), value: 5 },
@@ -54,7 +54,7 @@ describe("service-suggest", () => {
           ]
         },
         {
-          key: "44m58s6zf123456789s",
+          key: "44m58s6zf123s 456s 789s",
           value: [
             { key: Tile.create("s5"), value: 16 },
             { key: Tile.create("s8"), value: 19 },
@@ -64,7 +64,7 @@ describe("service-suggest", () => {
       ],
       "2": [
         {
-          key: "444m147p14sf123s123m",
+          key: "444m147p14sf123s 123m",
           value: [
             { key: Tile.create("p1"), value: 49 },
             { key: Tile.create("p4"), value: 49 },
@@ -74,7 +74,7 @@ describe("service-suggest", () => {
           ]
         },
         {
-          key: "123s467z15pf123456m",
+          key: "123s467z15pf123m 456m",
           value: [
             { key: Tile.create("p1"), value: 28 },
             { key: Tile.create("p5"), value: 20 },
@@ -86,7 +86,7 @@ describe("service-suggest", () => {
       ],
       "3": [
         {
-          key: "147m147p11sf123456s",
+          key: "147m147p11sf123s 456s",
           value: [
             {
               key: Tile.create("m1"),
@@ -115,7 +115,7 @@ describe("service-suggest", () => {
           ]
         },
         {
-          key: "1223456z1pf111z111p",
+          key: "1223456z1pf111z 111p",
           value: [
             { key: Tile.create("p1"), value: 14 },
             { key: Tile.create("z1"), value: 22 },
@@ -137,13 +137,13 @@ describe("service-suggest", () => {
           ]
         },
         {
-          key: "347m147p145s11zf258p",
+          key: "347m147p145s11zf777z",
           value: [
-            { key: Tile.create("m7"), value: 55 },
-            { key: Tile.create("p1"), value: 67 },
-            { key: Tile.create("p4"), value: 67 },
-            { key: Tile.create("p7"), value: 60 },
-            { key: Tile.create("s1"), value: 63 }
+            { key: Tile.create("m7"), value: 58 },
+            { key: Tile.create("p1"), value: 70 },
+            { key: Tile.create("p4"), value: 70 },
+            { key: Tile.create("p7"), value: 62 },
+            { key: Tile.create("s1"), value: 66 }
           ]
         }
       ]
