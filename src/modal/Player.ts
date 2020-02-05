@@ -3,13 +3,37 @@ import { Hand } from "./hand";
 import { Tile } from "./tile";
 
 interface IPlayer {
+  /**
+   * 手牌+副露
+   */
   hand: Hand;
+  /**
+   * 场风
+   */
   roundWindTile: Tile;
+  /**
+   * 自风
+   */
   selfWindTile: Tile;
+  /**
+   * 荣和/自摸的牌
+   */
   winTile: Tile | null;
+  /**
+   * 是否为自摸
+   */
   isTsumo: boolean;
+  /**
+   * 是否为亲家
+   */
   isParent: boolean;
+  /**
+   * 是否为双立直
+   */
   isDaburuRiichi: boolean;
+  /**
+   * 是否立直
+   */
   isRiichi: boolean;
 }
 
