@@ -35,10 +35,10 @@ describe("modal-mentsu", () => {
     const m3 = getMentsuByAcronym("m", "354");
     const m4 = getMentsuByAcronym("p", "505");
 
-    expect(m1.sortMentsu()).toEqual(74);
-    expect(m2.sortMentsu()).toEqual(100);
-    expect(m3.sortMentsu()).toEqual(8);
-    expect(m4.sortMentsu()).toEqual(42);
+    expect(m1.sortMentsu()).toEqual(44);
+    expect(m2.sortMentsu()).toEqual(56);
+    expect(m3.sortMentsu()).toEqual(6);
+    expect(m4.sortMentsu()).toEqual(26);
 
     expect(m1.tiles).toEqual(parse("456s").handTiles);
     expect(m2.tiles).toEqual(parse("222z").handTiles);

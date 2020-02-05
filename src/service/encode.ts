@@ -1,6 +1,6 @@
 import { Tile } from "../modal/tile";
 import { sortTiles } from "../utils/hand";
-import { isZi } from "../utils/tile";
+import { isSameType, isZi } from "../utils/tile";
 
 /**
  * 将手牌压缩为特征码
@@ -86,6 +86,9 @@ export const encode = (tiles: Tile[]): string => {
  */
 const calculateDiff = (firstTile: Tile, nextTile: Tile): number => {
   let diff = 3;
+  if (!isSameType(firstTile, nextTile)) {
+    return diff;
+  }
   if (isZi(firstTile)) {
     diff = nextTile.id - firstTile.id === 0 ? 0 : 3;
   } else {
