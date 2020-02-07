@@ -102,27 +102,27 @@ const generateHandPatterns = (patternList: number[][]) => {
  */
 const calculateKey = (patternList: number[][]) => {
   let result = 0;
-  let len = -1;
+  let bitPosition = -1;
   for (const block of patternList) {
     for (const i of block) {
-      len++;
+      bitPosition++;
       switch (i) {
         case 2:
-          result |= 0b11 << len;
-          len += 2;
+          result |= 0b11 << bitPosition;
+          bitPosition += 2;
           break;
         case 3:
-          result |= 0b1111 << len;
-          len += 4;
+          result |= 0b1111 << bitPosition;
+          bitPosition += 4;
           break;
         case 4:
-          result |= 0b111111 << len;
-          len += 6;
+          result |= 0b111111 << bitPosition;
+          bitPosition += 6;
           break;
       }
     }
-    result |= 0b1 << len;
-    len++;
+    result |= 0b1 << bitPosition;
+    bitPosition++;
   }
   return result;
 };
@@ -150,7 +150,6 @@ const encodePatterns = (patternList: number[][]) => {
     for (let j = 0; j < patternList[i].length; j++) {
       // 找雀头
       if (patternList[i][j] >= 2) {
-        // 刻子、順子の優先順位入れ替え
         // 按刻子,顺子的顺序查询
         for (const isShuntsu of [0, 1]) {
           const tempPatternList: number[][] = JSON.parse(

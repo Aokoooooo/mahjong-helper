@@ -33,4 +33,8 @@ export class Tile {
     this.acronym = acronym;
     this.isRedDora = isRedDora;
   }
+
+  public clone() {
+    return Tile.create(this.acronym);
+  }
 }
