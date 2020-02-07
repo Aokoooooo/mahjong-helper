@@ -19,30 +19,30 @@ export class Hand {
   /**
    * 手牌
    */
-  public hand: Tile[];
+  public handTiles: Tile[];
   /**
    * 副露
    */
-  public fulu: Mentsu[];
+  public fuluTiles: Mentsu[];
 
   constructor(hand: Tile[], fulu: Mentsu[]) {
     isTilesValid(hand, fulu);
-    this.hand = hand;
-    this.fulu = fulu;
+    this.handTiles = hand;
+    this.fuluTiles = fulu;
   }
 
   /**
    * 输出为简码
    */
   public toCode(): string {
-    return toCode(this.hand, this.fulu);
+    return toCode(this.handTiles, this.fuluTiles);
   }
 
   /**
    * 整理手牌
    */
   public sortTiles() {
-    this.hand = sortTiles(this.hand);
-    this.fulu = sortMentsu(this.fulu);
+    this.handTiles = sortTiles(this.handTiles);
+    this.fuluTiles = sortMentsu(this.fuluTiles);
   }
 }

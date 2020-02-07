@@ -8,7 +8,7 @@ class Pinhu extends AbstractYaku {
 
   public test(player: Player) {
     // 门清限定
-    if (player.hand.fulu.length) {
+    if (player.hand.fuluTiles.length) {
       return false;
     }
     return true;

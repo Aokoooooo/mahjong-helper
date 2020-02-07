@@ -10,8 +10,8 @@ describe("modal-hand", () => {
     const code = "12345678999mf7777z";
     const hand = Hand.fromCode(code);
     const r = getTileByCodeAndAcronym("m", "12345678999", "z", "7777", [3]);
-    expect(hand.fulu).toEqual(r.fuluTiles);
-    expect(hand.hand).toEqual(r.handTiles);
+    expect(hand.fuluTiles).toEqual(r.fuluTiles);
+    expect(hand.handTiles).toEqual(r.handTiles);
   });
   test("toCode work well", () => {
     const code = "12345678999mf7777z";

@@ -13,10 +13,10 @@ import { calculateShanten } from "./shanten";
  * @param hands 手牌对象
  */
 export const suggest = (hands: Hand): Suggest[] | null => {
-  if (!hands || hands.hand.length <= 0) {
+  if (!hands || hands.handTiles.length <= 0) {
     throw new Error("输入不可为空");
   }
-  const { hand, fulu } = hands;
+  const { handTiles: hand, fuluTiles: fulu } = hands;
   const code = encode(hand);
   const shanten = calculateShanten(code);
   if (shanten < 0) {
