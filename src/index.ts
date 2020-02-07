@@ -30,3 +30,4 @@ export { MAX_SHAN_TEN, calculateShanten } from "./service/shanten";
 export { encode } from "./service/encode";
 export { parse, toCode } from "./service/parse";
 export { suggest, sortSuggest } from "./service/suggest";
+export { agariData } from "./service/agariData";
