@@ -1,4 +1,5 @@
 import orderBy from "lodash/orderBy";
+import { Hand } from "../modal/hand";
 import { Mentsu } from "../modal/mentsu";
 import { Tile } from "../modal/tile";
 
@@ -63,3 +64,33 @@ export const sortTiles = (tiles: Tile[]): Tile[] => {
 export const sortMentsu = (mentsus: Mentsu[]) => {
   return orderBy(mentsus, m => m.sortMentsu);
 };
+
+/**
+ * 将手牌数组转换为长为34的数字数组,新数组的索引为牌的id,值为其数量
+ * @param tiles 手牌数组
+ */
+export function convertTilesToNumberArray(tiles: Tile[]): number[];
+/**
+ * 将手牌对象中的牌转换为长为34的数字数组,新数组的索引为牌的id,值为其数量
+ * @param hand 手牌对象
+ * @param includeFulu 是否将副露中的牌也转换
+ */
+export function convertTilesToNumberArray(
+  hand: Hand,
+  includeFulu?: boolean
+): number[];
+export function convertTilesToNumberArray(
+  tiles: Tile[] | Hand,
+  includeFulu: boolean = false
+) {
+  const array = new Array<number>(34).fill(0);
+  if (Array.isArray(tiles)) {
+    tiles.forEach(i => array[i.id]++);
+  } else {
+    tiles.handTiles.forEach(i => array[i.id]++);
+    if (includeFulu) {
+      tiles.fuluTiles.forEach(i => i.tiles.forEach(j => array[j.id]++));
+    }
+  }
+  return array;
+}
