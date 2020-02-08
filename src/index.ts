@@ -37,3 +37,10 @@ export {
   AgariDataInfo
 } from "./service/agari";
 export { yakuTypes, yakumanTypes, checkYaku, checkYakuman } from "./yaku";
+export { fuRoundUp10, calculateFu } from "./service/fu";
+export {
+  pointRoundUp100,
+  calculateBasePoint,
+  calculateRonPoint,
+  calculateSumoPayPoint
+} from "./service/point";
