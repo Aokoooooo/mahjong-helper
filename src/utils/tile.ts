@@ -25,6 +25,14 @@ export const isZi = (tile: Tile) => {
   return isFeng(tile) || isSanyuan(tile);
 };
 
+export const isLaotou = (tile: Tile) => {
+  return !isZi(tile) && (tile.id % 9 === 0 || tile.id % 9 === 8);
+};
+
+export const isYaojiu = (tile: Tile) => {
+  return isZi(tile) || isLaotou(tile);
+};
+
 export const isSameType = (tile1: Tile, tile2: Tile) => {
   return tile1.acronym.substr(0, 1) === tile2.acronym.substr(0, 1);
 };

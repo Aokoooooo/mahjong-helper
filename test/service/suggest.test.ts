@@ -200,7 +200,7 @@ interface ICodes {
 
 interface ICodeItem {
   key: string;
-  value: (IReformatedCodeItem[]) | null;
+  value: IReformatedCodeItem[] | null;
 }
 
 interface IReformatedCodeItem {

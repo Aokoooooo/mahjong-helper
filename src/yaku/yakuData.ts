@@ -1,17 +1,19 @@
-import { Player } from "../modal/Player";
-
 export const yakuTypes = {
   pinfu: { name: "平和", base: 1, naki: 0 },
   riichi: { name: "立直", base: 1, naki: 0 },
-  ippatsu: { name: "一发", base: 1, naki: 0 },
+  ippatsu: { name: "一发", base: 1, naki: 0 }, // no
   menzenchinTsumohou: { name: "门前清自摸和", base: 1, naki: 0 },
   iipeikou: { name: "一杯口", base: 1, naki: 0 },
   tanyao: { name: "断幺", base: 1, naki: 1 },
-  yakuhai: { name: "役牌", base: 1, naki: 1 },
-  haiteiRaoyue: { name: "海底捞月", base: 1, naki: 1 },
-  houteiRaoyui: { name: "河底捞鱼", base: 1, naki: 1 },
-  chankan: { name: "抢杠", base: 1, naki: 1 },
-  rinshanKaihou: { name: "岭上开花", base: 1, naki: 1 },
+  yakuhaiJikaze: { name: "役牌:自风", base: 1, naki: 1 },
+  yakuhaiBakaze: { name: "役牌:场风", base: 1, naki: 1 },
+  yakuhaiHaku: { name: "役牌:白", base: 1, naki: 1 },
+  yakuhaiHatsu: { name: "役牌:发", base: 1, naki: 1 },
+  yakuhaiChun: { name: "役牌:中", base: 1, naki: 1 },
+  haiteiRaoyue: { name: "海底捞月", base: 1, naki: 1 }, // no
+  houteiRaoyui: { name: "河底捞鱼", base: 1, naki: 1 }, // no
+  chankan: { name: "抢杠", base: 1, naki: 1 }, // no
+  rinshanKaihou: { name: "岭上开花", base: 1, naki: 1 }, // no
 
   chiitoitsu: { name: "七对子", base: 2, naki: 0 },
   daburuRiichi: { name: "W立直", base: 2, naki: 0 },
@@ -41,26 +43,12 @@ export const yakumanTypes = {
   suuankouTanki: { name: "四暗刻单骑", base: 2, naki: 0 },
   shousuushii: { name: "小四喜", base: 1, naki: 1 },
   daisuushii: { name: "大四喜", base: 2, naki: 2 },
-  Tsuuiisou: { name: "字一色", base: 1, naki: 1 },
+  tsuuiisou: { name: "字一色", base: 1, naki: 1 },
   ryuuiisou: { name: "绿一色", base: 1, naki: 1 },
   chinroutou: { name: "清老头", base: 1, naki: 1 },
   chuurenPoutou: { name: "九宝莲灯", base: 1, naki: 0 },
   junseiChuurenPoutou: { name: "纯正九宝莲灯", base: 2, naki: 0 },
   suukantsu: { name: "四杠子", base: 1, naki: 1 },
-  tenhou: { name: "天和", base: 1, naki: 0 },
-  chiihou: { name: "地和", base: 1, naki: 0 }
+  tenhou: { name: "天和", base: 1, naki: 0 }, // no
+  chiihou: { name: "地和", base: 1, naki: 0 } // no
 };
-
-export abstract class AbstractYaku {
-  public readonly type: typeof yakuTypes[keyof typeof yakuTypes];
-
-  constructor(type: typeof yakuTypes[keyof typeof yakuTypes]) {
-    this.type = type;
-  }
-
-  public allowNaki() {
-    return !this.type.naki;
-  }
-
-  public abstract test(player: Player): boolean;
-}

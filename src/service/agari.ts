@@ -85,7 +85,7 @@ export const calculateAgariKey = (
   return { key, hand14List };
 };
 
-class AgariDataInfo {
+export class AgariDataInfo {
   /**
    * 雀头
    */
