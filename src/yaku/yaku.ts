@@ -13,7 +13,7 @@ import { tileEnum } from "../enum/tile";
 import { Tile } from "../modal/tile";
 import { mentsuType } from "../modal/mentsu";
 
-export const pinhu = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const pinfu = (player: Player, agariDataInfo: AgariDataInfo) => {
   // 门清限定
   if (player.hand.fuluTiles.length) {
     return false;
@@ -325,4 +325,35 @@ export const chiniisou = (player: Player, agariDataInfo: AgariDataInfo) => {
   player.hand.fuluTiles.forEach(i => i.tiles.forEach(j => checker(j)));
   player.hand.handTiles.forEach(i => checker(i));
   return (hasMan ? 1 : 0) + (hasPin ? 1 : 0) + (hasSou ? 1 : 0) === 1;
+};
+
+export default {
+  pinfu,
+  riichi,
+  menzenchinTsumohou,
+  iipeikou,
+  tanyao,
+  yakuhaiJikaze,
+  yakuhaiBakaze,
+  yakuhaiHaku,
+  yakuhaiHatsu,
+  yakuhaiChun,
+
+  chiitoitsu,
+  daburuRiichi,
+  ikkitsuukan,
+  sanshokuDoujun,
+  honchantaiyaochuu,
+  toitoihou,
+  sanshokuDoukou,
+  sanankou,
+  sankantsu,
+  honroutou,
+  shousangen,
+
+  ryanpeikou,
+  junchantaiyaochuu,
+  honiisou,
+
+  chiniisou
 };

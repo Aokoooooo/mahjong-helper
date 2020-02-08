@@ -91,7 +91,7 @@ export class AgariDataInfo {
    */
   public readonly jantouTile: Tile;
   /**
-   * 刻子/杠子牌集合,默认为暗刻,需结合荣和时的牌来判断
+   * 刻子集合,默认为暗刻,需结合荣和时的牌来判断
    */
   public readonly koutsuTiles: Tile[];
   /**
@@ -141,7 +141,7 @@ export class AgariDataInfo {
   }
 }
 
-export const getAgariData = (hand: Hand | Tile[]) => {
+export const getAgariDataInfo = (hand: Hand | Tile[]) => {
   if (Array.isArray(hand)) {
     hand = sortTiles(hand);
   } else {

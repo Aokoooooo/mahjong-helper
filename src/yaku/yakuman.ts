@@ -12,10 +12,6 @@ import {
 import { Tile } from "../modal/tile";
 import { parse, toCode } from "../service/parse";
 
-export const kazoeYakuman = (han: number) => {
-  return han >= 13;
-};
-
 export const kokushiMusou = (player: Player, agariDataInfo: AgariDataInfo) => {
   if (player.hand.fuluTiles.length) {
     return false;
@@ -159,4 +155,20 @@ export const suukantsu = (player: Player, agariDataInfo: AgariDataInfo) => {
     (x, y) => x + (y.tiles.length === 4 ? 1 : 0),
     0
   );
+};
+
+export default {
+  kokushiMusou,
+  kokushiMusouJuusanMenmachi,
+  daisangen,
+  suuankou,
+  suuankouTanki,
+  shousuushii,
+  daisuushii,
+  tsuuiisou,
+  ryuuiisou,
+  chinroutou,
+  chuurenPoutou,
+  junseiChuurenPoutou,
+  suukantsu
 };

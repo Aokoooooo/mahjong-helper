@@ -35,7 +35,7 @@ export const yakuTypes = {
 };
 
 export const yakumanTypes = {
-  kazoeYakuman: { name: "累计役满", base: 1, naki: 1 },
+  kazoeYakuman: { name: "累计役满", base: 1, naki: 1 }, // no
   kokushiMusou: { name: "国士无双", base: 1, naki: 0 },
   kokushiMusouJuusanMenmachi: { name: "国士无双十三面", base: 2, naki: 0 },
   daisangen: { name: "大三元", base: 1, naki: 1 },
