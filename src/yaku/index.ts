@@ -59,6 +59,7 @@ export const checkYaku = (player: Player, agariDataInfo: AgariDataInfo) => {
     point
   };
 };
+export type CheckYakuReturenType = ReturnType<typeof checkYaku>;
 
 const getYakuHanByIsMenzenchin = (
   isMenzenchin: boolean,

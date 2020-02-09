@@ -41,7 +41,8 @@ export {
   yakumanTypes,
   checkYakuHelper,
   checkYakumanHelper,
-  checkYaku
+  checkYaku,
+  CheckYakuReturenType
 } from "./yaku";
 export { fuRoundUp10, calculateFu } from "./service/fu";
 export {

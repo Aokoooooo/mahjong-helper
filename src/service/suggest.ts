@@ -6,7 +6,7 @@ import { Tile } from "../modal/tile";
 import { isSuo, isWan, isZi } from "../utils/tile";
 import { encode } from "./encode";
 import { calculateShanten } from "./shanten";
-import { checkYaku } from "../yaku";
+import { checkYaku, CheckYakuReturenType } from "../yaku";
 import { Player } from "../modal/player";
 import { getAgariDataInfo, AgariDataInfo } from "./agari";
 
@@ -14,9 +14,7 @@ import { getAgariDataInfo, AgariDataInfo } from "./agari";
  * 根据当前玩家对象,给出切牌建议,返回null说明已经荣和
  * @param player 玩家对象
  */
-export const suggest = (
-  player: Player
-): Suggest[] | ReturnType<typeof checkYaku> => {
+export const suggest = (player: Player): Suggest[] | CheckYakuReturenType => {
   if (!player || player.hand.handTiles.length <= 0) {
     throw new Error("输入不可为空");
   }
@@ -42,7 +40,7 @@ const getYakuInfoHelper = (player: Player) => {
     const yakuInfo = checkYaku(player, y);
     return yakuInfo.point.child > (x?.point?.child ?? 0) ? yakuInfo : x;
     // tslint:disable-next-line: no-object-literal-type-assertion
-  }, {} as ReturnType<typeof checkYaku>);
+  }, {} as CheckYakuReturenType);
 };
 
 /**

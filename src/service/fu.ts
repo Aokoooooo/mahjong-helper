@@ -13,7 +13,9 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
   getAnkan(player).forEach(i => (fu += isYaojiu(i) ? 32 : 16));
   getMinkan(player).forEach(i => (fu += isYaojiu(i) ? 16 : 8));
   getAnkou(player, agariDataInfo).forEach(i => (fu += isYaojiu(i) ? 8 : 4));
-  getMinkou(player).forEach(i => (fu += isYaojiu(i) ? 4 : 2));
+  getMinkou(player).forEach(
+    i => (fu += i.tiles.some(j => isYaojiu(j)) ? 4 : 2)
+  );
 
   if (isSanyuan(agariDataInfo.jantouTile)) {
     fu += 2;

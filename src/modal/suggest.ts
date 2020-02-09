@@ -1,6 +1,5 @@
 import { Tile } from "./tile";
-import { AgariDataInfo } from "../service/agari";
-import { checkYaku } from "../yaku";
+import { CheckYakuReturenType } from "../yaku";
 
 /**
  * 切牌建议对象
@@ -29,15 +28,14 @@ export class Suggest {
   /**
    * 和牌分析结果
    */
-  public yakuInfo?: ReturnType<typeof checkYaku>;
-
+  public yakuInfo?: CheckYakuReturenType;
   constructor(
     discard: Tile,
     count: number,
     details: Map<Tile, number>,
     oldXiangTing: number,
     newXiangTing: number,
-    yakuInfo?: ReturnType<typeof checkYaku>
+    yakuInfo?: CheckYakuReturenType
   ) {
     this.discard = discard;
     this.count = count;

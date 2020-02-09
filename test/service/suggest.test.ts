@@ -1,6 +1,7 @@
 import orderBy from "lodash/orderBy";
-import { Hand, Suggest, suggest, Tile } from "../../src";
+import { Hand, Suggest, suggest, Tile, CheckYakuReturenType } from "../../src";
 import { sortDiscardFn } from "../../src/service/suggest";
+import { Player } from "../../src/modal/player";
 
 describe("service-suggest", () => {
   test("input params can't be null", () => {
@@ -168,7 +169,13 @@ describe("service-suggest", () => {
     };
     Object.keys(codes).forEach(xiangTing => {
       codes[xiangTing].forEach(i => {
-        const result = suggest(Hand.fromCode(i.key));
+        const result = suggest(
+          Player.create(
+            Hand.fromCode(i.key),
+            Tile.create("z1"),
+            Tile.create("z2")
+          )
+        );
         expect(reformatResult(result)).toEqual(
           i.value ? sortReformatedCodeItem(i.value) : i.value
         );
@@ -177,8 +184,8 @@ describe("service-suggest", () => {
   });
 });
 
-const reformatResult = (suggests: Suggest[] | null) => {
-  return suggests
+const reformatResult = (suggests: Suggest[] | CheckYakuReturenType) => {
+  return Array.isArray(suggests)
     ? suggests.map(
         (i): IReformatedCodeItem => {
           return {
@@ -187,7 +194,7 @@ const reformatResult = (suggests: Suggest[] | null) => {
           };
         }
       )
-    : null;
+    : suggests;
 };
 
 const sortReformatedCodeItem = (items: IReformatedCodeItem[]) => {
