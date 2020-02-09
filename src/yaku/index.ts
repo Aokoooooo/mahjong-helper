@@ -3,10 +3,15 @@ import yakumanTest from "./yakuman";
 import { yakuTypes, yakumanTypes } from "./yakuData";
 import { Player } from "../modal/Player";
 import { AgariDataInfo } from "../service/agari";
+import { calculateFu } from "../service/fu";
+import { calculateSumoPayPoint } from "../service/point";
 
 export { yakuTypes, yakumanTypes };
 
-export const checkYakuman = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const checkYakumanHelper = (
+  player: Player,
+  agariDataInfo: AgariDataInfo
+) => {
   const isMenzenchin = player.hand.fuluTiles.length === 0;
   let yakumanTime = 0;
   const yakumanList: typeof yakumanTypes[keyof typeof yakumanTypes][] = [];
@@ -20,7 +25,10 @@ export const checkYakuman = (player: Player, agariDataInfo: AgariDataInfo) => {
   return { yakumanTime, yakumanList };
 };
 
-export const checkYaku = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const checkYakuHelper = (
+  player: Player,
+  agariDataInfo: AgariDataInfo
+) => {
   const isMenzenchin = player.hand.fuluTiles.length === 0;
   let yakuHan = 0;
   const yakuList: typeof yakuTypes[keyof typeof yakuTypes][] = [];
@@ -32,6 +40,24 @@ export const checkYaku = (player: Player, agariDataInfo: AgariDataInfo) => {
     }
   });
   return { yakuHan, yakuList };
+};
+
+export const checkYaku = (player: Player, agariDataInfo: AgariDataInfo) => {
+  const yakumanResult = checkYakumanHelper(player, agariDataInfo);
+  const yakuResult = checkYakuHelper(player, agariDataInfo);
+  const fu = calculateFu(player, agariDataInfo);
+  const point = calculateSumoPayPoint(
+    yakuResult.yakuHan,
+    fu,
+    yakumanResult.yakumanTime
+  );
+  return {
+    isYakuman: !!yakumanResult.yakumanTime,
+    yakumanResult,
+    yakuResult,
+    fu,
+    point
+  };
 };
 
 const getYakuHanByIsMenzenchin = (

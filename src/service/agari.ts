@@ -157,7 +157,7 @@ export const getAgariDataInfo = (hand: Hand | Tile[]) => {
 
   const getTileByIndex = (index: number) => {
     const acronym = tileEnumKeys.filter(
-      i => tileEnum[i].id === hand14List[index]
+      i => tileEnum[i].id === hand14List[index] && !tileEnum[i].isRedDora
     );
     if (acronym.length !== 1) {
       throw new Error(`牌的id范围必须为0-33, ${hand14List[index]}`);

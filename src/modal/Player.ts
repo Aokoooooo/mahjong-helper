@@ -43,7 +43,7 @@ export class Player {
     roundWindTile: Tile = Tile.create("z1"),
     selfWindTile: Tile = Tile.create("z1")
   ) {
-    if (!isFeng(roundWindTile) || isFeng(selfWindTile)) {
+    if (!isFeng(roundWindTile) || !isFeng(selfWindTile)) {
       throw new Error(`自风牌和场风牌必须为风牌`);
     }
 

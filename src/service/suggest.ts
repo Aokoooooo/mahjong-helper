@@ -1,49 +1,65 @@
 import orderBy from "lodash/orderBy";
 import { tileEnum, tileEnumKeys } from "../enum/tile";
-import { Hand } from "../modal/hand";
 import { Mentsu } from "../modal/mentsu";
 import { Suggest } from "../modal/suggest";
 import { Tile } from "../modal/tile";
 import { isSuo, isWan, isZi } from "../utils/tile";
 import { encode } from "./encode";
 import { calculateShanten } from "./shanten";
+import { checkYaku } from "../yaku";
+import { Player } from "../modal/player";
+import { getAgariDataInfo, AgariDataInfo } from "./agari";
 
 /**
- * 根据当前手牌对象,给出切牌建议,返回null说明已经荣和
- * @param hands 手牌对象
+ * 根据当前玩家对象,给出切牌建议,返回null说明已经荣和
+ * @param player 玩家对象
  */
-export const suggest = (hands: Hand): Suggest[] | null => {
-  if (!hands || hands.handTiles.length <= 0) {
+export const suggest = (
+  player: Player
+): Suggest[] | ReturnType<typeof checkYaku> => {
+  if (!player || player.hand.handTiles.length <= 0) {
     throw new Error("输入不可为空");
   }
-  const { handTiles: hand, fuluTiles: fulu } = hands;
-  const code = encode(hand);
+
+  const code = encode(player.hand.handTiles);
   const shanten = calculateShanten(code);
+
   if (shanten < 0) {
-    return null;
+    return getYakuInfoHelper(player);
   }
+
   const suggests: Suggest[] = [];
-  for (let i = 0; i < hand.length; i++) {
-    suggestHelper(hand, i, shanten, suggests, fulu);
+  for (let i = 0; i < player.hand.handTiles.length; i++) {
+    suggestHelper(player, i, shanten, suggests);
   }
+
   return sortSuggest(suggests);
+};
+
+const getYakuInfoHelper = (player: Player) => {
+  const agariDataInfo = getAgariDataInfo(player.hand) as AgariDataInfo[];
+  return agariDataInfo.reduce((x, y) => {
+    const yakuInfo = checkYaku(player, y);
+    return yakuInfo.point.child > (x?.point?.child ?? 0) ? yakuInfo : x;
+    // tslint:disable-next-line: no-object-literal-type-assertion
+  }, {} as ReturnType<typeof checkYaku>);
 };
 
 /**
  * 计算出牌建议的工具函数
- * @param hand 手牌数组
+ * @param player 玩家对象
  * @param index 切牌对象的数组索引
  * @param shanten 当前向听数
  * @param suggests 建议数组
- * @param fulu 副露数组
  */
 const suggestHelper = (
-  hand: Tile[],
+  player: Player,
   index: number,
   shanten: number,
-  suggests: Suggest[],
-  fulu: Mentsu[]
+  suggests: Suggest[]
 ): void => {
+  const hand = player.hand.handTiles;
+  const fulu = player.hand.fuluTiles;
   const tile = hand[index];
   // 跳过重复切牌
   if (suggests.some(i => i.discard.id === tile.id)) {
@@ -71,6 +87,9 @@ const suggestHelper = (
       // 有效进张
       if (tempXiangTing < shanten) {
         countPotentialTiles(suggest, hand, cursor, fulu);
+        if (tempXiangTing < 0) {
+          suggest.yakuInfo = getYakuInfoHelper(player);
+        }
       }
       hand[index] = tile;
     });
