@@ -4,7 +4,7 @@ import {
   Tile,
   Hand,
   getAgariDataInfo,
-  Mentsu
+  calculateAgariKey
 } from "../../src";
 import { Player } from "../../src/modal/player";
 
@@ -25,22 +25,24 @@ const calculateFuByCodeAndOtherInfo = (
 ) => {
   const hand = Hand.fromCode(code);
   const agariInfoes = getAgariDataInfo(hand);
-
-  agariInfoes.reduce(
-    (x, y) =>
-      Math.max(
-        x,
-        calculateFu(
-          Player.create(
-            hand,
-            config.roundWindTile ?? Tile.create("z1"),
-            config.selfWindTile ?? Tile.create("z1"),
-            config
-          ),
-          y
-        )
-      ),
-    0
+  console.log(calculateAgariKey(hand));
+  return (
+    agariInfoes?.reduce(
+      (x, y) =>
+        Math.max(
+          x,
+          calculateFu(
+            Player.create(
+              hand,
+              config?.roundWindTile ?? Tile.create("z1"),
+              config?.selfWindTile ?? Tile.create("z1"),
+              config
+            ),
+            y
+          )
+        ),
+      0
+    ) ?? 0
   );
 };
 
@@ -63,7 +65,7 @@ describe("service-fu", () => {
 
   describe("calculateFu", () => {
     it("chitoi", () => {
-      expect(calculateFuByCodeAndOtherInfo("11223344556677m")).toEqual(25);
+      expect(calculateFuByCodeAndOtherInfo("1133557799m1133z")).toEqual(25);
     });
     describe("no special tiles and no koutsu", () => {
       it("with naki", () => {

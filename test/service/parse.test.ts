@@ -4,7 +4,9 @@ import {
   sortTiles,
   Tile,
   TileEnumKeyType,
-  toCode
+  toCode,
+  mentsuType,
+  Hand
 } from "../../src";
 import { sortMentsu } from "../../src/utils/hand";
 
@@ -99,6 +101,12 @@ describe("service-parse", () => {
         `副露中的每一组牌必须为顺子,刻子,杠子:110p`
       );
     });
+    it("parse ankan work well", () => {
+      expect(parse("f 1111M").fuluTiles[0].type).toEqual(mentsuType.ankan);
+      expect(parse("f 1111P").fuluTiles[0].type).toEqual(mentsuType.ankan);
+      expect(parse("f 1111S").fuluTiles[0].type).toEqual(mentsuType.ankan);
+      expect(parse("f 1111Z").fuluTiles[0].type).toEqual(mentsuType.ankan);
+    });
   });
   describe("toCode", () => {
     test("correct parse wan", () => {
@@ -144,6 +152,11 @@ describe("service-parse", () => {
     test("only hand", () => {
       const { handTiles } = getTileByCodeAndAcronym("z", "12234566", "m");
       expect(toCode(handTiles)).toEqual("12234566z");
+    });
+    it("correct parse ankan", () => {
+      const code = "11mf2222M 2222P 2222S 2222Z";
+      const hand = Hand.fromCode(code);
+      expect(toCode(hand.handTiles, hand.fuluTiles)).toEqual(code);
     });
   });
 });

@@ -3,7 +3,13 @@ import { Mentsu, mentsuType } from "../modal/mentsu";
 import { Tile } from "../modal/tile";
 import { sortMentsu, sortTiles } from "../utils/hand";
 import { isKantsu, isKoutsu, isShuntsu } from "../utils/mentsu";
-import { isSuo, isTong, isValidTileTypeAcronym, isWan } from "../utils/tile";
+import {
+  isSuo,
+  isTong,
+  isValidTileTypeAcronym,
+  isWan,
+  tileTypeAcronym
+} from "../utils/tile";
 
 /**
  * 将简码转换为手牌数组和面子数组
@@ -13,7 +19,7 @@ export const parse = (code: string) => {
   if (!code || code.trim() === "") {
     throw new Error("输入不可为空");
   }
-  code = code.trim().toLowerCase();
+  code = code.trim();
   const seperatorIndex = code.indexOf("f");
   const handString =
     seperatorIndex === -1 ? code : code.substring(0, seperatorIndex);
@@ -40,12 +46,17 @@ const parseMentsu = (fuluString: string) => {
     // 过滤空string
     .filter(i => i)
     .forEach(i => {
-      const tiles = parseHelper(i);
+      const isAnkan = tileTypeAcronym.some(
+        j => i.indexOf(j.toUpperCase()) > -1
+      );
+      const tiles = parseHelper(i.toLowerCase());
       if (tiles.length !== 3 && tiles.length !== 4) {
         throw new Error(`副露中的每一组牌必须为3或4张:${i}`);
       }
       if (isKantsu(tiles)) {
-        mentsuList.push(Mentsu.create(mentsuType.minkan, tiles));
+        mentsuList.push(
+          Mentsu.create(isAnkan ? mentsuType.ankan : mentsuType.minkan, tiles)
+        );
       } else if (isKoutsu(tiles)) {
         mentsuList.push(Mentsu.create(mentsuType.koutsu, tiles));
       } else if (isShuntsu(tiles)) {
@@ -102,7 +113,9 @@ export const toCode = (handTiles: Tile[], fuluTiles: Mentsu[] = []) => {
  * @param fuluTiles 面子数组
  */
 const convertMentsuToString = (fuluTiles: Mentsu[]) => {
-  const stringList = fuluTiles.map(i => toCodeHelper(i.tiles));
+  const stringList = fuluTiles.map(i =>
+    toCodeHelper(i.tiles, i.type === mentsuType.ankan)
+  );
   return stringList.length ? stringList.join(" ") : "";
 };
 
@@ -110,9 +123,12 @@ const convertMentsuToString = (fuluTiles: Mentsu[]) => {
  * 将手牌数组转换为简码的工具函数
  * @param tiles 手牌数组
  */
-const toCodeHelper = (tiles: Tile[]) => {
+const toCodeHelper = (tiles: Tile[], isAnkan?: boolean) => {
   const getAcronymSubstring = (tile: Tile) => {
     return tile.isRedDora ? "0" : tile.acronym.substring(1);
+  };
+  const getAcronymByMentsuType = (acronym: string, isAnkan?: boolean) => {
+    return isAnkan ? acronym.toUpperCase() : acronym;
   };
   const wan: string[] = [];
   const suo: string[] = [];
@@ -129,9 +145,17 @@ const toCodeHelper = (tiles: Tile[]) => {
       zi.push(getAcronymSubstring(i));
     }
   });
-  const wanStr = `${wan.join("")}${wan.length ? "m" : ""}`;
-  const tongStr = `${tong.join("")}${tong.length ? "p" : ""}`;
-  const suoStr = `${suo.join("")}${suo.length ? "s" : ""}`;
-  const ziStr = `${zi.join("")}${zi.length ? "z" : ""}`;
+  const wanStr = `${wan.join("")}${
+    wan.length ? getAcronymByMentsuType("m", isAnkan) : ""
+  }`;
+  const tongStr = `${tong.join("")}${
+    tong.length ? getAcronymByMentsuType("p", isAnkan) : ""
+  }`;
+  const suoStr = `${suo.join("")}${
+    suo.length ? getAcronymByMentsuType("s", isAnkan) : ""
+  }`;
+  const ziStr = `${zi.join("")}${
+    zi.length ? getAcronymByMentsuType("z", isAnkan) : ""
+  }`;
   return `${wanStr}${tongStr}${suoStr}${ziStr}`;
 };

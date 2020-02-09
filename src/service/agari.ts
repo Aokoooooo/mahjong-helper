@@ -148,7 +148,7 @@ export const getAgariDataInfo = (hand: Hand | Tile[]) => {
     hand.sortTiles();
   }
 
-  const { key, hand14List } = calculateAgariKey(hand);
+  const { key } = calculateAgariKey(hand);
 
   const agariHandInfo = agariData.get(key);
   if (!agariHandInfo || !agariHandInfo.length) {

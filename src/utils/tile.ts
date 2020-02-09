@@ -37,7 +37,7 @@ export const isSameType = (tile1: Tile, tile2: Tile) => {
   return tile1.acronym.substr(0, 1) === tile2.acronym.substr(0, 1);
 };
 
-const tileTypeAcronym = ["m", "p", "s", "z"];
+export const tileTypeAcronym = ["m", "p", "s", "z"];
 /**
  * 判断是否为合法的缩写字母
  * @param acronym 缩写字母
