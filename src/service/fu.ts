@@ -3,6 +3,11 @@ import { AgariDataInfo } from "./agari";
 import { getAnkan, getMinkan, getAnkou, getMinkou } from "../utils/player";
 import { isYaojiu, isSanyuan } from "../utils/tile";
 
+/**
+ * 计算符数
+ * @param player 玩家对象
+ * @param agariDataInfo 和牌分析数据
+ */
 export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
   // 七对子
   if (agariDataInfo.isChiitoi) {
@@ -94,5 +99,8 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
  * @param fu 符
  */
 export const fuRoundUp10 = (fu: number) => {
+  if (fu <= 0) {
+    throw new Error("符必须大于0");
+  }
   return (Math.floor((fu - 1) / 10) + 1) * 10;
 };

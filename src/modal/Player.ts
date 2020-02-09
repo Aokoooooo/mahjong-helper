@@ -41,7 +41,13 @@ export class Player {
   public static create(
     hand: Hand,
     roundWindTile: Tile = Tile.create("z1"),
-    selfWindTile: Tile = Tile.create("z1")
+    selfWindTile: Tile = Tile.create("z1"),
+    config?: Partial<
+      Pick<
+        Player,
+        "isDaburuRiichi" | "isParent" | "isRiichi" | "isTsumo" | "winTile"
+      >
+    >
   ) {
     if (!isFeng(roundWindTile) || !isFeng(selfWindTile)) {
       throw new Error(`自风牌和场风牌必须为风牌`);
@@ -51,11 +57,11 @@ export class Player {
       hand,
       roundWindTile,
       selfWindTile,
-      winTile: null,
-      isTsumo: false,
-      isParent: false,
-      isDaburuRiichi: false,
-      isRiichi: false
+      winTile: config?.winTile ?? null,
+      isTsumo: config?.isTsumo ?? false,
+      isParent: config?.isParent ?? false,
+      isDaburuRiichi: config?.isDaburuRiichi ?? false,
+      isRiichi: config?.isRiichi ?? false
     });
   }
   /**
