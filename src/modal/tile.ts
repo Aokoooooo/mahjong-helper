@@ -1,21 +1,47 @@
-import { tileEnum, TileEnumKeyType } from "../enum/tile";
+import {
+  tileEnum,
+  TileEnumKeyType,
+  tileEnumValues,
+  tileEnumKeys
+} from "../enum/tile";
 
 /**
  * 牌
  */
 export class Tile {
   /**
+   * 根据id创建牌
+   * @param id 牌的id
+   */
+  public static create(id: number): Tile;
+  /**
    * 根据缩写创建牌
    * @param acronym 牌的缩写
    */
-  public static create = (acronym: TileEnumKeyType) => {
-    return new Tile(
-      tileEnum[acronym].id,
-      tileEnum[acronym].name,
-      acronym,
-      tileEnum[acronym].isRedDora
+  // tslint:disable-next-line: unified-signatures
+  public static create(acronym: TileEnumKeyType): Tile;
+  public static create(acronym: TileEnumKeyType | number) {
+    if (typeof acronym === "string") {
+      return new Tile(
+        tileEnum[acronym].id,
+        tileEnum[acronym].name,
+        acronym,
+        tileEnum[acronym].isRedDora
+      );
+    }
+    const keys = tileEnumKeys.filter(
+      i => tileEnum[i].id === acronym && !tileEnum[i].isRedDora
     );
-  };
+    if (keys.length !== 1) {
+      throw new Error(`错误的id:${acronym}`);
+    }
+    return new Tile(
+      tileEnum[keys[0]].id,
+      tileEnum[keys[0]].name,
+      keys[0],
+      tileEnum[keys[0]].isRedDora
+    );
+  }
 
   public readonly id: number;
   public readonly name: string;

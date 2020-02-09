@@ -155,28 +155,18 @@ export const getAgariDataInfo = (hand: Hand | Tile[]) => {
     return null;
   }
 
-  const getTileByIndex = (index: number) => {
-    const acronym = tileEnumKeys.filter(
-      i => tileEnum[i].id === hand14List[index] && !tileEnum[i].isRedDora
-    );
-    if (acronym.length !== 1) {
-      throw new Error(`牌的id范围必须为0-33, ${hand14List[index]}`);
-    }
-    return Tile.create(acronym[0]);
-  };
-
   const parseAgariData = (agariHandInfo: number) => {
-    const jantouTile = getTileByIndex((agariHandInfo >> 6) & 0xf);
+    const jantouTile = Tile.create((agariHandInfo >> 6) & 0xf);
 
     const koutsuNum = agariHandInfo & 0x7;
     const koutsuTiles = new Array<Tile>(koutsuNum);
     for (let i = 0; i < koutsuTiles.length; i++) {
-      koutsuTiles[i] = getTileByIndex((agariHandInfo >> (10 + i * 4)) & 0xf);
+      koutsuTiles[i] = Tile.create((agariHandInfo >> (10 + i * 4)) & 0xf);
     }
 
     const shuntsuFirstTiles = new Array<Tile>((agariHandInfo >> 3) & 0x7);
     for (let i = 0; i < shuntsuFirstTiles.length; i++) {
-      shuntsuFirstTiles[i] = getTileByIndex(
+      shuntsuFirstTiles[i] = Tile.create(
         (agariHandInfo >> (10 + (i + koutsuNum) * 4)) & 0xf
       );
     }
