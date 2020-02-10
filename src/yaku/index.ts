@@ -5,6 +5,7 @@ import { Player } from "../modal/Player";
 import { AgariDataInfo } from "../service/agari";
 import { calculateFu } from "../service/fu";
 import { calculateSumoPayPoint } from "../service/point";
+import { mentsuType } from "../modal/mentsu";
 
 export { yakuTypes, yakumanTypes };
 
@@ -12,7 +13,8 @@ export const checkYakumanHelper = (
   player: Player,
   agariDataInfo: AgariDataInfo
 ) => {
-  const isMenzenchin = player.hand.fuluTiles.length === 0;
+  const isMenzenchin =
+    player.hand.fuluTiles.filter(i => i.type !== mentsuType.ankan).length === 0;
   let yakumanTime = 0;
   const yakumanList: typeof yakumanTypes[keyof typeof yakumanTypes][] = [];
   Reflect.ownKeys(yakumanTest).forEach(i => {

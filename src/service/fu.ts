@@ -3,6 +3,8 @@ import { AgariDataInfo } from "./agari";
 import { getAnkan, getMinkan, getAnkou, getMinkou } from "../utils/player";
 import { isYaojiu, isSanyuan } from "../utils/tile";
 import { isValidPinfuShuntsuFirstTile } from "../yaku/yaku";
+import { mentsuType } from "../modal/mentsu";
+import { toCode } from "./parse";
 
 /**
  * 计算符数
@@ -19,17 +21,15 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
   getAnkan(player).forEach(i => (fu += isYaojiu(i) ? 32 : 16));
   getMinkan(player).forEach(i => (fu += isYaojiu(i) ? 16 : 8));
   getAnkou(player, agariDataInfo).forEach(i => (fu += isYaojiu(i) ? 8 : 4));
-  getMinkou(player).forEach(
+  getMinkou(player, agariDataInfo).forEach(
     i => (fu += i.tiles.some(j => isYaojiu(j)) ? 4 : 2)
   );
 
   if (isSanyuan(agariDataInfo.jantouTile)) {
     fu += 2;
-  }
-  if (agariDataInfo.jantouTile.id === player.roundWindTile.id) {
+  } else if (agariDataInfo.jantouTile.id === player.roundWindTile.id) {
     fu += 2;
-  }
-  if (agariDataInfo.jantouTile.id === player.selfWindTile.id) {
+  } else if (agariDataInfo.jantouTile.id === player.selfWindTile.id) {
     fu += 2;
   }
   // 算了半天一点符不加, 这个时候有些特殊情况需要处理一下
@@ -64,10 +64,10 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
   // 自摸加符
   if (player.isTsumo) {
     fu += 2;
-    // 门清加符
-    if (!player.hand.fuluTiles.length) {
-      fu += 10;
-    }
+  }
+  // 门清加符
+  if (!player.hand.fuluTiles.filter(i => i.type !== mentsuType.ankan).length) {
+    fu += 10;
   }
 
   // 单骑加符
@@ -90,6 +90,7 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
       }
     }
   }
+
   return fuRoundUp10(fu);
 };
 
