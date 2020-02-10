@@ -2,6 +2,7 @@ import { Player } from "../modal/player";
 import { AgariDataInfo } from "./agari";
 import { getAnkan, getMinkan, getAnkou, getMinkou } from "../utils/player";
 import { isYaojiu, isSanyuan } from "../utils/tile";
+import { isValidPinfuShuntsuFirstTile } from "../yaku/yaku";
 
 /**
  * 计算符数
@@ -31,7 +32,6 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
   if (agariDataInfo.jantouTile.id === player.selfWindTile.id) {
     fu += 2;
   }
-
   // 算了半天一点符不加, 这个时候有些特殊情况需要处理一下
   if (fu === 20) {
     if (player.hand.fuluTiles.length) {
@@ -40,8 +40,8 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
     }
     const isPinfu = agariDataInfo.shuntsuFirstTiles.some(
       i =>
-        (i.id % 9 < 6 && i.id === player.winTile?.id) ||
-        (i.id % 9 > 0 && i.id + 2 === player.winTile?.id)
+        isValidPinfuShuntsuFirstTile(i) &&
+        (i.id === player.winTile?.id || i.id + 2 === player.winTile?.id)
     );
 
     if (player.isTsumo) {
@@ -81,8 +81,8 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
         break;
       }
       if (
-        (i.id % 9 === 0 && i.id + 2 === player.winTile?.id) ||
-        (i.id % 9 === 6 && i.id === player.winTile?.id)
+        !isValidPinfuShuntsuFirstTile(i) &&
+        (i.id + 2 === player.winTile?.id || i.id === player.winTile?.id)
       ) {
         // 边张加符
         fu += 2;
@@ -90,7 +90,6 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
       }
     }
   }
-
   return fuRoundUp10(fu);
 };
 

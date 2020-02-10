@@ -23,9 +23,13 @@ export const pinfu = (player: Player, agariDataInfo: AgariDataInfo) => {
   }
   return agariDataInfo.shuntsuFirstTiles.some(
     i =>
-      (i.id % 9 < 6 && i.id === player.winTile?.id) ||
-      (i.id % 9 > 0 && i.id + 2 === player.winTile?.id)
+      isValidPinfuShuntsuFirstTile(i) &&
+      (i.id === player.winTile?.id || i.id + 2 === player.winTile?.id)
   );
+};
+
+export const isValidPinfuShuntsuFirstTile = (tile: Tile) => {
+  return tile.id % 9 > 0 && tile.id % 9 < 6;
 };
 
 export const riichi = (player: Player, agariDataInfo: AgariDataInfo) => {

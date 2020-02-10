@@ -1,4 +1,3 @@
-import { tileEnum, tileEnumKeys } from "../enum/tile";
 import { Hand } from "../modal/hand";
 import { Tile } from "../modal/tile";
 import { convertTilesToNumberArray, sortTiles } from "../utils/hand";
@@ -22,11 +21,12 @@ export const calculateAgariKey = (
 
   const hand14List = new Array<number>(14);
   let hand14ListIndex = 0;
-
   for (let i = 0; i < 3; i++) {
+    let hasPrev = false;
     for (let j = 0; j < 9; j++) {
       cursor++;
       if (hand34List[cursor] > 0) {
+        hasPrev = true;
         hand14List[hand14ListIndex++] = cursor;
 
         bitPosition++;
@@ -45,14 +45,15 @@ export const calculateAgariKey = (
             break;
         }
       } else {
-        if (hand34List[cursor - 1]) {
+        if (hasPrev) {
+          hasPrev = false;
           key |= 0b1 << bitPosition;
           bitPosition++;
         }
       }
     }
 
-    if (hand34List[cursor]) {
+    if (hasPrev) {
       key |= 0b1 << bitPosition;
       bitPosition++;
     }
@@ -148,7 +149,7 @@ export const getAgariDataInfo = (hand: Hand | Tile[]) => {
     hand.sortTiles();
   }
 
-  const { key } = calculateAgariKey(hand);
+  const { key, hand14List } = calculateAgariKey(hand);
 
   const agariHandInfo = agariData.get(key);
   if (!agariHandInfo || !agariHandInfo.length) {
@@ -156,18 +157,20 @@ export const getAgariDataInfo = (hand: Hand | Tile[]) => {
   }
 
   const parseAgariData = (agariHandInfo: number) => {
-    const jantouTile = Tile.create((agariHandInfo >> 6) & 0xf);
+    const jantouTile = Tile.create(hand14List[(agariHandInfo >> 6) & 0xf]);
 
     const koutsuNum = agariHandInfo & 0x7;
     const koutsuTiles = new Array<Tile>(koutsuNum);
     for (let i = 0; i < koutsuTiles.length; i++) {
-      koutsuTiles[i] = Tile.create((agariHandInfo >> (10 + i * 4)) & 0xf);
+      koutsuTiles[i] = Tile.create(
+        hand14List[(agariHandInfo >> (10 + i * 4)) & 0xf]
+      );
     }
 
     const shuntsuFirstTiles = new Array<Tile>((agariHandInfo >> 3) & 0x7);
     for (let i = 0; i < shuntsuFirstTiles.length; i++) {
       shuntsuFirstTiles[i] = Tile.create(
-        (agariHandInfo >> (10 + (i + koutsuNum) * 4)) & 0xf
+        hand14List[(agariHandInfo >> (10 + (i + koutsuNum) * 4)) & 0xf]
       );
     }
 

@@ -3,8 +3,7 @@ import {
   fuRoundUp10,
   Tile,
   Hand,
-  getAgariDataInfo,
-  calculateAgariKey
+  getAgariDataInfo
 } from "../../src";
 import { Player } from "../../src/modal/player";
 
@@ -25,7 +24,7 @@ const calculateFuByCodeAndOtherInfo = (
 ) => {
   const hand = Hand.fromCode(code);
   const agariInfoes = getAgariDataInfo(hand);
-  console.log(calculateAgariKey(hand));
+
   return (
     agariInfoes?.reduce(
       (x, y) =>
@@ -69,7 +68,9 @@ describe("service-fu", () => {
     });
     describe("no special tiles and no koutsu", () => {
       it("with naki", () => {
-        expect(calculateFuByCodeAndOtherInfo("12345677m45sf 123p")).toEqual(30);
+        expect(calculateFuByCodeAndOtherInfo("12345677m456sf 123p")).toEqual(
+          30
+        );
       });
       it("is tsumo and is pinfu", () => {
         expect(
@@ -83,21 +84,21 @@ describe("service-fu", () => {
         expect(
           calculateFuByCodeAndOtherInfo("123456789m456p11s", {
             isTsumo: true,
-            winTile: Tile.create("p5")
+            winTile: Tile.create("m1")
           })
         ).toEqual(30);
       });
       it("is not tsumo but is pinfu", () => {
         expect(
           calculateFuByCodeAndOtherInfo("123456789m456p11s", {
-            winTile: Tile.create("p6")
+            winTile: Tile.create("p4")
           })
         ).toEqual(30);
       });
       it("is not tsumo and is not pinfu", () => {
         expect(
           calculateFuByCodeAndOtherInfo("123456789m456p11s", {
-            winTile: Tile.create("p5")
+            winTile: Tile.create("s1")
           })
         ).toEqual(40);
         expect(
@@ -112,9 +113,10 @@ describe("service-fu", () => {
         ).toEqual(40);
       });
     });
+    // 下面的案例都得有点刻子或者特殊雀头
     it("30 fu", () => {
       expect(calculateFuByCodeAndOtherInfo("111456789m456p11s")).toEqual(30);
-      expect(calculateFuByCodeAndOtherInfo("123456789m456p11z")).toEqual(30);
+      expect(calculateFuByCodeAndOtherInfo("123456789m456p55z")).toEqual(30);
     });
   });
 });
