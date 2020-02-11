@@ -20,11 +20,11 @@ export class Suggest {
   /**
    * 切牌前向听数
    */
-  public oldXiangTing: number;
+  public oldShanten: number;
   /**
    * 切牌后向听数
    */
-  public newXiangTing: number;
+  public newShanten: number;
   /**
    * 和牌分析结果
    */
@@ -33,15 +33,15 @@ export class Suggest {
     discard: Tile,
     count: number,
     details: Map<Tile, number>,
-    oldXiangTing: number,
-    newXiangTing: number,
+    oldShanten: number,
+    newShanten: number,
     yakuInfo?: CheckYakuReturenType
   ) {
     this.discard = discard;
     this.count = count;
     this.details = details;
-    this.oldXiangTing = oldXiangTing;
-    this.newXiangTing = newXiangTing;
+    this.oldShanten = oldShanten;
+    this.newShanten = newShanten;
     this.yakuInfo = yakuInfo;
   }
 }

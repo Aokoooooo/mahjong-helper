@@ -167,8 +167,8 @@ describe("service-suggest", () => {
       // "7": ["117m147p147s12345z", "145m147p147s12345z", "146m147p147s12345z"],
       // "8": ["147m147p147s12345z", "1234567z259m259p6s"]
     };
-    Object.keys(codes).forEach(xiangTing => {
-      codes[xiangTing].forEach(i => {
+    Object.keys(codes).forEach(shanten => {
+      codes[shanten].forEach(i => {
         const result = suggest(
           Player.create(Hand.fromCode(i.key), {
             roundWindTile: Tile.create("z1"),

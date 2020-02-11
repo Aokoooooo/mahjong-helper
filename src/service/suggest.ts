@@ -63,7 +63,7 @@ const suggestHelper = (
   if (suggests.some(i => i.discard.id === tile.id)) {
     return;
   }
-  let tempXiangTing = shanten;
+  let tempShanten = shanten;
   const suggest = new Suggest(tile, 0, new Map(), shanten, shanten);
 
   tileEnumKeys
@@ -81,11 +81,11 @@ const suggestHelper = (
       }
       hand[index] = Tile.create(key);
       const code = encode(hand);
-      tempXiangTing = calculateShanten(code);
+      tempShanten = calculateShanten(code);
       // 有效进张
-      if (tempXiangTing < shanten) {
+      if (tempShanten < shanten) {
         countPotentialTiles(suggest, hand, cursor, fulu);
-        if (tempXiangTing < 0) {
+        if (tempShanten < 0) {
           suggest.yakuInfo = getYakuInfoHelper(player);
         }
       }
@@ -94,7 +94,7 @@ const suggestHelper = (
 
   // 出这张牌能使向听数-1
   if (suggest.count > 0) {
-    suggest.newXiangTing = shanten - 1;
+    suggest.newShanten = shanten - 1;
     suggests.push(suggest);
   }
 };

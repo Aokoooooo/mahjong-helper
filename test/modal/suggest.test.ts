@@ -8,8 +8,8 @@ describe("modal-suggest", () => {
     expect(sg1.discard.acronym).toEqual("m3");
     expect(sg1.count).toEqual(13);
     expect(sg1.details).toBe(map);
-    expect(sg1.oldXiangTing).toEqual(0);
-    expect(sg1.newXiangTing).toEqual(-1);
+    expect(sg1.oldShanten).toEqual(0);
+    expect(sg1.newShanten).toEqual(-1);
     expect(sg1.yakuInfo).toBeUndefined();
 
     const yakuInfo: CheckYakuReturenType = {
@@ -24,8 +24,8 @@ describe("modal-suggest", () => {
     expect(sg2.discard.acronym).toEqual("p3");
     expect(sg2.count).toEqual(1);
     expect(sg2.details).toBe(map);
-    expect(sg2.oldXiangTing).toEqual(4);
-    expect(sg2.newXiangTing).toEqual(3);
+    expect(sg2.oldShanten).toEqual(4);
+    expect(sg2.newShanten).toEqual(3);
     expect(sg2.yakuInfo).toBe(yakuInfo);
   });
 });
