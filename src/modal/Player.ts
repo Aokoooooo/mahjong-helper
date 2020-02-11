@@ -37,7 +37,15 @@ interface IPlayer {
   isRiichi: boolean;
 }
 
+/**
+ * 玩家对象
+ */
 export class Player {
+  /**
+   * 创建玩家对象
+   * @param hand 手牌
+   * @param config 配置项(比如风,自摸,立直等信息)
+   */
   public static create(
     hand: Hand,
     config?: Partial<
