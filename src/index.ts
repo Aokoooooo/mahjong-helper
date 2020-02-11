@@ -26,6 +26,7 @@ export {
   mentsuTypeValue
 } from "./modal/mentsu";
 export { Suggest } from "./modal/suggest";
+export { Player } from "./modal/player";
 export { MAX_SHAN_TEN, calculateShanten } from "./service/shanten";
 export { encode } from "./service/encode";
 export { parse, toCode } from "./service/parse";

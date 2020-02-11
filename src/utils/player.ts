@@ -1,8 +1,6 @@
 import { Player } from "../modal/player";
 import { mentsuType, Mentsu } from "../modal/mentsu";
 import { AgariDataInfo } from "../service/agari";
-import { isZi } from "./tile";
-import { Tile } from "../modal/tile";
 
 export const getAnkan = (player: Player) => {
   return player.hand.fuluTiles

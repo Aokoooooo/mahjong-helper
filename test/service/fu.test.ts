@@ -27,19 +27,7 @@ const calculateFuByCodeAndOtherInfo = (
 
   return (
     agariInfoes?.reduce(
-      (x, y) =>
-        Math.max(
-          x,
-          calculateFu(
-            Player.create(
-              hand,
-              config?.roundWindTile ?? Tile.create("z1"),
-              config?.selfWindTile ?? Tile.create("z1"),
-              config
-            ),
-            y
-          )
-        ),
+      (x, y) => Math.max(x, calculateFu(Player.create(hand, config), y)),
       0
     ) ?? 0
   );
@@ -101,8 +89,7 @@ describe("service-fu", () => {
         ).toEqual(30);
         expect(
           calculateFuByCodeAndOtherInfo("123456789m456p11s", {
-            isTsumo: true,
-            winTile: Tile.create("s1")
+            isTsumo: true
           })
         ).toEqual(30);
       });

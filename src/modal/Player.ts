@@ -10,11 +10,11 @@ interface IPlayer {
   /**
    * 场风
    */
-  roundWindTile: Tile;
+  roundWindTile: Tile | null;
   /**
    * 自风
    */
-  selfWindTile: Tile;
+  selfWindTile: Tile | null;
   /**
    * 荣和/自摸的牌
    */
@@ -40,23 +40,30 @@ interface IPlayer {
 export class Player {
   public static create(
     hand: Hand,
-    roundWindTile: Tile = Tile.create("z1"),
-    selfWindTile: Tile = Tile.create("z1"),
     config?: Partial<
       Pick<
         Player,
-        "isDaburuRiichi" | "isParent" | "isRiichi" | "isTsumo" | "winTile"
+        | "isDaburuRiichi"
+        | "isParent"
+        | "isRiichi"
+        | "isTsumo"
+        | "winTile"
+        | "roundWindTile"
+        | "selfWindTile"
       >
     >
   ) {
-    if (!isFeng(roundWindTile) || !isFeng(selfWindTile)) {
+    if (
+      (config?.roundWindTile && !isFeng(config.roundWindTile)) ||
+      (config?.selfWindTile && !isFeng(config.selfWindTile))
+    ) {
       throw new Error(`自风牌和场风牌必须为风牌`);
     }
 
     return new Player({
       hand,
-      roundWindTile,
-      selfWindTile,
+      roundWindTile: config?.roundWindTile ?? null,
+      selfWindTile: config?.selfWindTile ?? null,
       winTile: config?.winTile ?? null,
       isTsumo: config?.isTsumo ?? false,
       isParent: config?.isParent ?? false,
@@ -71,11 +78,11 @@ export class Player {
   /**
    * 场风
    */
-  public roundWindTile: Tile;
+  public roundWindTile: Tile | null;
   /**
    * 自风
    */
-  public selfWindTile: Tile;
+  public selfWindTile: Tile | null;
   /**
    * 荣和/自摸的牌
    */

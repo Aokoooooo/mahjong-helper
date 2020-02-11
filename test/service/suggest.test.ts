@@ -170,11 +170,10 @@ describe("service-suggest", () => {
     Object.keys(codes).forEach(xiangTing => {
       codes[xiangTing].forEach(i => {
         const result = suggest(
-          Player.create(
-            Hand.fromCode(i.key),
-            Tile.create("z1"),
-            Tile.create("z2")
-          )
+          Player.create(Hand.fromCode(i.key), {
+            roundWindTile: Tile.create("z1"),
+            selfWindTile: Tile.create("z2")
+          })
         );
         expect(reformatResult(result)).toEqual(
           i.value ? sortReformatedCodeItem(i.value) : i.value

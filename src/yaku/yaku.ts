@@ -55,11 +55,11 @@ export const tanyao = (player: Player, agariDataInfo: AgariDataInfo) => {
 };
 
 export const yakuhaiJikaze = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return agariDataInfo.koutsuTiles.some(i => i.id === player.selfWindTile.id);
+  return agariDataInfo.koutsuTiles.some(i => i.id === player.selfWindTile?.id);
 };
 
 export const yakuhaiBakaze = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return agariDataInfo.koutsuTiles.some(i => i.id === player.roundWindTile.id);
+  return agariDataInfo.koutsuTiles.some(i => i.id === player.roundWindTile?.id);
 };
 
 export const yakuhaiHaku = (player: Player, agariDataInfo: AgariDataInfo) => {

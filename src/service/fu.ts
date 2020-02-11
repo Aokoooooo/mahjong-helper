@@ -4,7 +4,6 @@ import { getAnkan, getMinkan, getAnkou, getMinkou } from "../utils/player";
 import { isYaojiu, isSanyuan } from "../utils/tile";
 import { isValidPinfuShuntsuFirstTile } from "../yaku/yaku";
 import { mentsuType } from "../modal/mentsu";
-import { toCode } from "./parse";
 
 /**
  * 计算符数
@@ -27,9 +26,9 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
 
   if (isSanyuan(agariDataInfo.jantouTile)) {
     fu += 2;
-  } else if (agariDataInfo.jantouTile.id === player.roundWindTile.id) {
+  } else if (agariDataInfo.jantouTile.id === player.roundWindTile?.id) {
     fu += 2;
-  } else if (agariDataInfo.jantouTile.id === player.selfWindTile.id) {
+  } else if (agariDataInfo.jantouTile.id === player.selfWindTile?.id) {
     fu += 2;
   }
   // 算了半天一点符不加, 这个时候有些特殊情况需要处理一下
