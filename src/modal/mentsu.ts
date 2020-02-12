@@ -1,5 +1,6 @@
 import { sortTiles } from "../utils/hand";
 import { Tile } from "./tile";
+import { isMentsuValid } from "../utils/mentsu";
 
 /**
  * 面子对象
@@ -9,16 +10,9 @@ export class Mentsu {
    * 创建面子对象
    * @param type 面子的类型
    * @param tiles 面子所包含的牌
-   * @param calledTile 吃碰杠的那张牌,暗杠没有
-   * @param kakanTile 加杠的那张牌
    */
-  public static create(
-    type: mentsuTypeValue,
-    tiles: Tile[],
-    calledTile: Tile | null = null,
-    kakanTile: Tile | null = null
-  ) {
-    return new Mentsu(type, tiles, calledTile, kakanTile);
+  public static create(type: mentsuTypeValue, tiles: Tile[]) {
+    return new Mentsu(type, tiles);
   }
 
   /**
@@ -29,25 +23,12 @@ export class Mentsu {
    * 组成面子的牌
    */
   public tiles: Tile[];
-  /**
-   * 吃碰杠的牌
-   */
-  public readonly calledTile: Tile | null;
-  /**
-   * 加杠的牌
-   */
-  public readonly kakanTile: Tile | null;
 
-  constructor(
-    type: mentsuTypeValue,
-    tiles: Tile[],
-    calledTile: Tile | null,
-    kakanTile: Tile | null
-  ) {
+  constructor(type: mentsuTypeValue, tiles: Tile[]) {
+    tiles = sortTiles(tiles);
+    isMentsuValid(tiles, type);
     this.type = type;
     this.tiles = tiles;
-    this.calledTile = calledTile;
-    this.kakanTile = kakanTile;
   }
 
   /**

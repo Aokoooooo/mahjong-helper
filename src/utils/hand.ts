@@ -41,9 +41,6 @@ export const isTilesValid = (handTiles: Tile[], fuluTiles: Mentsu[]) => {
       count = 0;
     }
   }
-  if ((convertedFuluTiles.length - gangNum) % 3 !== 0) {
-    throw new Error("错误的副露数量");
-  }
   if (convertedFuluTiles.length - gangNum + handTiles.length !== 14) {
     throw new Error("错误的手牌数量");
   }

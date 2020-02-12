@@ -5,19 +5,21 @@ import {
   Mentsu,
   parse,
   Tile,
-  TileEnumKeyType
+  TileEnumKeyType,
+  mentsuType,
+  mentsuTypeValue
 } from "../../src";
 
-function getMentsuByAcronym(acronym: string, tiles: string): Mentsu;
 function getMentsuByAcronym(
   acronym: string,
   tiles: string,
-  returnTiles: boolean
-): Tile[];
+  type: mentsuTypeValue
+): Mentsu;
+function getMentsuByAcronym(acronym: string, tiles: string): Tile[];
 function getMentsuByAcronym(
   acronym: string,
   tiles: string,
-  returnTiles: boolean = false
+  type?: mentsuTypeValue
 ) {
   const list = tiles
     .split("")
@@ -25,15 +27,15 @@ function getMentsuByAcronym(
       (x, y) => [...x, Tile.create(`${acronym}${y}` as TileEnumKeyType)],
       [] as Tile[]
     );
-  return returnTiles ? list : Mentsu.create(0, list);
+  return typeof type === "number" ? Mentsu.create(type, list) : list;
 }
 
 describe("modal-mentsu", () => {
   test("sort tiles work well", () => {
-    const m1 = getMentsuByAcronym("s", "654");
-    const m2 = getMentsuByAcronym("z", "222");
-    const m3 = getMentsuByAcronym("m", "354");
-    const m4 = getMentsuByAcronym("p", "505");
+    const m1 = getMentsuByAcronym("s", "654", mentsuType.shuntsu);
+    const m2 = getMentsuByAcronym("z", "222", mentsuType.koutsu);
+    const m3 = getMentsuByAcronym("m", "354", mentsuType.shuntsu);
+    const m4 = getMentsuByAcronym("p", "505", mentsuType.koutsu);
 
     expect(m1.sortMentsu()).toEqual(44);
     expect(m2.sortMentsu()).toEqual(56);
@@ -47,10 +49,10 @@ describe("modal-mentsu", () => {
   });
 
   test("type check utils work well", () => {
-    const m1 = getMentsuByAcronym("s", "654", true);
-    const m2 = getMentsuByAcronym("z", "222", true);
-    const m3 = getMentsuByAcronym("m", "354", true);
-    const m4 = getMentsuByAcronym("p", "5505", true);
+    const m1 = getMentsuByAcronym("s", "654");
+    const m2 = getMentsuByAcronym("z", "222");
+    const m3 = getMentsuByAcronym("m", "354");
+    const m4 = getMentsuByAcronym("p", "5505");
     const m11 = getMentsuByAcronym("s", "654");
     const m22 = getMentsuByAcronym("z", "222");
     const m33 = getMentsuByAcronym("m", "354");

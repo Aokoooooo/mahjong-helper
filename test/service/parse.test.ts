@@ -135,7 +135,7 @@ describe("service-parse", () => {
         "120345678",
         "p",
         "123 999",
-        [1, 1]
+        [mentsuType.shuntsu, mentsuType.koutsu]
       );
       expect(toCode(handTiles, fuluTiles)).toEqual("123405678pf123p 999p");
     });

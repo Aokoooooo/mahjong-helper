@@ -11,7 +11,7 @@ import {
   isSou
 } from "../../src";
 
-describe("utils-tile", () => {
+describe("util-tile", () => {
   const m = Tile.create("m0");
   const p = Tile.create("p0");
   const s = Tile.create("s0");

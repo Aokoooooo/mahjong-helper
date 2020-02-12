@@ -1,4 +1,4 @@
-import { Hand, parse, Mentsu } from "../../src";
+import { Hand, parse, Mentsu, mentsuType } from "../../src";
 import { getTileByCodeAndAcronym } from "../service/parse.test";
 import { sortMentsu, convertTilesToNumberArray } from "../../src/utils/hand";
 
@@ -14,15 +14,6 @@ describe("util-hand", () => {
       const incorrectCode2 = "1111222233334m";
       expect(() => Hand.fromCode(incorrectCode2)).toThrow("错误的手牌数量");
     });
-    test("the sum of fulu should be the multiple of 3(regard every gang as 3 tiles.)", () => {
-      const r = getTileByCodeAndAcronym("p", "11223344", "z", "1111 22", [
-        3,
-        3
-      ]);
-      expect(() => new Hand(r.handTiles, r.fuluTiles)).toThrow(
-        "错误的副露数量"
-      );
-    });
   });
 
   test("sort tiles work well", () => {
@@ -31,10 +22,10 @@ describe("util-hand", () => {
   });
 
   test("sort mentsu work well", () => {
-    const m1 = Mentsu.create(0, parse("123s").handTiles);
-    const m2 = Mentsu.create(0, parse("444p").handTiles);
-    const m3 = Mentsu.create(0, parse("7777z").handTiles);
-    const m4 = Mentsu.create(0, parse("999m").handTiles);
+    const m1 = Mentsu.create(mentsuType.shuntsu, parse("123s").handTiles);
+    const m2 = Mentsu.create(mentsuType.koutsu, parse("444p").handTiles);
+    const m3 = Mentsu.create(mentsuType.kakan, parse("7777z").handTiles);
+    const m4 = Mentsu.create(mentsuType.koutsu, parse("999m").handTiles);
 
     const mList = [m1, m2, m3, m4];
     expect(sortMentsu(mList)).toEqual([m4, m2, m1, m3]);

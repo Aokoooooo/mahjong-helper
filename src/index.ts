@@ -11,7 +11,7 @@ export {
   isYaochu
 } from "./utils/tile";
 export { isTilesValid, sortTiles } from "./utils/hand";
-export { isKantsu, isKoutsu, isShuntsu } from "./utils/mentsu";
+export { isKantsu, isKoutsu, isShuntsu, isMentsuValid } from "./utils/mentsu";
 export {
   tileEnum,
   tileEnumKeys,
