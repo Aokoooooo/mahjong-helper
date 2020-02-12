@@ -41,7 +41,7 @@ export class Hand {
   /**
    * 整理手牌
    */
-  public sortTiles() {
+  public sortHand() {
     this.handTiles = sortTiles(this.handTiles);
     this.fuluTiles = sortMentsu(this.fuluTiles);
   }

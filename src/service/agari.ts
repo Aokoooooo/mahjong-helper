@@ -146,7 +146,7 @@ export const getAgariDataInfo = (hand: Hand | Tile[]) => {
   if (Array.isArray(hand)) {
     hand = sortTiles(hand);
   } else {
-    hand.sortTiles();
+    hand.sortHand();
   }
 
   const { key, hand14List } = calculateAgariKey(hand);

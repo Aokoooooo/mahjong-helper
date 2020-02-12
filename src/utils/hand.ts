@@ -62,7 +62,7 @@ export const sortTiles = (tiles: Tile[]): Tile[] => {
  * @param mentsus 副露的面子数组
  */
 export const sortMentsu = (mentsus: Mentsu[]) => {
-  return orderBy(mentsus, m => m.sortMentsu);
+  return orderBy(mentsus, m => m.sortMentsu());
 };
 
 /**
