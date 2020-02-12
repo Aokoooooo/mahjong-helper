@@ -4,10 +4,10 @@ import { Tile } from "../modal/tile";
 import { sortMentsu, sortTiles } from "../utils/hand";
 import { isKantsu, isKoutsu, isShuntsu } from "../utils/mentsu";
 import {
-  isSuo,
-  isTong,
+  isSou,
+  isPin,
   isValidTileTypeAcronym,
-  isWan,
+  isMan,
   tileTypeAcronym
 } from "../utils/tile";
 
@@ -130,32 +130,32 @@ const toCodeHelper = (tiles: Tile[], isAnkan?: boolean) => {
   const getAcronymByMentsuType = (acronym: string, isAnkan?: boolean) => {
     return isAnkan ? acronym.toUpperCase() : acronym;
   };
-  const wan: string[] = [];
-  const suo: string[] = [];
-  const tong: string[] = [];
-  const zi: string[] = [];
+  const man: string[] = [];
+  const sou: string[] = [];
+  const pin: string[] = [];
+  const ji: string[] = [];
   tiles.forEach(i => {
-    if (isWan(i)) {
-      wan.push(getAcronymSubstring(i));
-    } else if (isSuo(i)) {
-      suo.push(getAcronymSubstring(i));
-    } else if (isTong(i)) {
-      tong.push(getAcronymSubstring(i));
+    if (isMan(i)) {
+      man.push(getAcronymSubstring(i));
+    } else if (isSou(i)) {
+      sou.push(getAcronymSubstring(i));
+    } else if (isPin(i)) {
+      pin.push(getAcronymSubstring(i));
     } else {
-      zi.push(getAcronymSubstring(i));
+      ji.push(getAcronymSubstring(i));
     }
   });
-  const wanStr = `${wan.join("")}${
-    wan.length ? getAcronymByMentsuType("m", isAnkan) : ""
+  const manStr = `${man.join("")}${
+    man.length ? getAcronymByMentsuType("m", isAnkan) : ""
   }`;
-  const tongStr = `${tong.join("")}${
-    tong.length ? getAcronymByMentsuType("p", isAnkan) : ""
+  const pinStr = `${pin.join("")}${
+    pin.length ? getAcronymByMentsuType("p", isAnkan) : ""
   }`;
-  const suoStr = `${suo.join("")}${
-    suo.length ? getAcronymByMentsuType("s", isAnkan) : ""
+  const souStr = `${sou.join("")}${
+    sou.length ? getAcronymByMentsuType("s", isAnkan) : ""
   }`;
-  const ziStr = `${zi.join("")}${
-    zi.length ? getAcronymByMentsuType("z", isAnkan) : ""
+  const jiStr = `${ji.join("")}${
+    ji.length ? getAcronymByMentsuType("z", isAnkan) : ""
   }`;
-  return `${wanStr}${tongStr}${suoStr}${ziStr}`;
+  return `${manStr}${pinStr}${souStr}${jiStr}`;
 };

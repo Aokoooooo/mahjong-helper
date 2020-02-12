@@ -1,6 +1,6 @@
 import { Player, Hand, Tile } from "../../src";
 describe("modal-player", () => {
-  it("self wind should be feng", () => {
+  it("self wind should be kaze", () => {
     const helper = (
       selfWindTile: Tile | null = null,
       roundWindTile: Tile | null = null

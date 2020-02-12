@@ -1,10 +1,10 @@
 export {
-  isWan,
-  isSuo,
-  isTong,
-  isFeng,
-  isSanyuan,
-  isZi,
+  isMan,
+  isSou,
+  isPin,
+  isKaze,
+  isSangen,
+  isJi,
   isValidTileTypeAcronym,
   isSameType
 } from "./utils/tile";

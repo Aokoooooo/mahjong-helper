@@ -1,7 +1,7 @@
 import { Player } from "../modal/player";
 import { AgariDataInfo } from "./agari";
 import { getAnkan, getMinkan, getAnkou, getMinkou } from "../utils/player";
-import { isYaojiu, isSanyuan } from "../utils/tile";
+import { isYaochu, isSangen } from "../utils/tile";
 import { isValidPinfuShuntsuFirstTile } from "../yaku/yaku";
 import { mentsuType } from "../modal/mentsu";
 
@@ -17,14 +17,14 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
   }
   let fu = 20;
 
-  getAnkan(player).forEach(i => (fu += isYaojiu(i) ? 32 : 16));
-  getMinkan(player).forEach(i => (fu += isYaojiu(i) ? 16 : 8));
-  getAnkou(player, agariDataInfo).forEach(i => (fu += isYaojiu(i) ? 8 : 4));
+  getAnkan(player).forEach(i => (fu += isYaochu(i) ? 32 : 16));
+  getMinkan(player).forEach(i => (fu += isYaochu(i) ? 16 : 8));
+  getAnkou(player, agariDataInfo).forEach(i => (fu += isYaochu(i) ? 8 : 4));
   getMinkou(player, agariDataInfo).forEach(
-    i => (fu += i.tiles.some(j => isYaojiu(j)) ? 4 : 2)
+    i => (fu += i.tiles.some(j => isYaochu(j)) ? 4 : 2)
   );
 
-  if (isSanyuan(agariDataInfo.jantouTile)) {
+  if (isSangen(agariDataInfo.jantouTile)) {
     fu += 2;
   } else if (agariDataInfo.jantouTile.id === player.roundWindTile?.id) {
     fu += 2;

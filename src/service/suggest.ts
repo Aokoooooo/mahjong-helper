@@ -3,7 +3,7 @@ import { tileEnum, tileEnumKeys } from "../enum/tile";
 import { Mentsu } from "../modal/mentsu";
 import { Suggest } from "../modal/suggest";
 import { Tile } from "../modal/tile";
-import { isSuo, isWan, isZi } from "../utils/tile";
+import { isSou, isMan, isJi } from "../utils/tile";
 import { encode } from "./encode";
 import { calculateShanten } from "./shanten";
 import { checkYaku, CheckYakuReturenType } from "../yaku";
@@ -163,7 +163,7 @@ const isValidCandidate = (
 
 /**
  * 将出牌数组牌型,返回排序后的新数组.
- * 排序方法为从进张多到少,切牌从字到万筒索,从外到内.
+ * 排序方法为从进张多到少,切牌从字到万饼索,从外到内.
  * @param suggests 出牌建议数组
  */
 export const sortSuggest = (suggests: Suggest[]) =>
@@ -174,11 +174,11 @@ export const sortSuggest = (suggests: Suggest[]) =>
  * @param discard 切牌对象
  */
 export const sortDiscardFn = (discard: Tile) => {
-  if (isZi(discard)) {
+  if (isJi(discard)) {
     return 5;
-  } else if (isSuo(discard)) {
+  } else if (isSou(discard)) {
     return Math.abs(discard.id - tileEnum.s5.id);
-  } else if (isWan(discard)) {
+  } else if (isMan(discard)) {
     return Math.abs(discard.id - tileEnum.m5.id);
   } else {
     return Math.abs(discard.id - tileEnum.p5.id);

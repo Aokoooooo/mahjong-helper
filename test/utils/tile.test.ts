@@ -1,29 +1,29 @@
 import {
-  isFeng,
+  isKaze,
   isSameType,
-  isSanyuan,
-  isZi,
+  isSangen,
+  isJi,
   Tile,
   TileEnumKeyType
 } from "../../src";
 
 describe("utils-tile", () => {
-  test("is Feng", () => {
+  test("is kaze", () => {
     const tiles: Tile[] = [];
     for (const i of "1234") {
       const key = `z${i}` as TileEnumKeyType;
       tiles.push(Tile.create(key));
     }
-    const result = tiles.reduce((x, y) => x && isFeng(y), true);
+    const result = tiles.reduce((x, y) => x && isKaze(y), true);
     expect(result).toEqual(true);
   });
-  test("is Sanyuan", () => {
+  test("is sangen", () => {
     const tiles: Tile[] = [];
     for (const i of "567") {
       const key = `z${i}` as TileEnumKeyType;
       tiles.push(Tile.create(key));
     }
-    const result = tiles.reduce((x, y) => x && isSanyuan(y), true);
+    const result = tiles.reduce((x, y) => x && isSangen(y), true);
     expect(result).toEqual(true);
   });
   test("is Xi", () => {
@@ -32,7 +32,7 @@ describe("utils-tile", () => {
       const key = `z${i}` as TileEnumKeyType;
       tiles.push(Tile.create(key));
     }
-    const result = tiles.reduce((x, y) => x && isZi(y), true);
+    const result = tiles.reduce((x, y) => x && isJi(y), true);
     expect(result).toEqual(true);
   });
   test("is same type", () => {

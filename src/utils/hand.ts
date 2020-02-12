@@ -50,7 +50,7 @@ export const isTilesValid = (handTiles: Tile[], fuluTiles: Mentsu[]) => {
 };
 
 /**
- * 按照id从小到大(万筒索东南西北白发中)将牌排序,返回排序后的新数组
+ * 按照id从小到大(万饼索东南西北白发中)将牌排序,返回排序后的新数组
  * @param tiles 手牌数组
  */
 export const sortTiles = (tiles: Tile[]): Tile[] => {

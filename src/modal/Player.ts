@@ -1,4 +1,4 @@
-import { isFeng } from "../utils/tile";
+import { isKaze } from "../utils/tile";
 import { Hand } from "./hand";
 import { Tile } from "./tile";
 
@@ -62,8 +62,8 @@ export class Player {
     >
   ) {
     if (
-      (config?.roundWindTile && !isFeng(config.roundWindTile)) ||
-      (config?.selfWindTile && !isFeng(config.selfWindTile))
+      (config?.roundWindTile && !isKaze(config.roundWindTile)) ||
+      (config?.selfWindTile && !isKaze(config.selfWindTile))
     ) {
       throw new Error(`自风牌和场风牌必须为风牌`);
     }

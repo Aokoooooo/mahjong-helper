@@ -1,6 +1,6 @@
 import { Tile } from "../modal/tile";
 import { sortTiles } from "../utils/hand";
-import { isSameType, isZi } from "../utils/tile";
+import { isSameType, isJi } from "../utils/tile";
 
 /**
  * 将手牌压缩为特征码
@@ -89,7 +89,7 @@ const calculateDiff = (firstTile: Tile, nextTile: Tile): number => {
   if (!isSameType(firstTile, nextTile)) {
     return diff;
   }
-  if (isZi(firstTile)) {
+  if (isJi(firstTile)) {
     diff = nextTile.id - firstTile.id === 0 ? 0 : 3;
   } else {
     diff = nextTile.id - firstTile.id;

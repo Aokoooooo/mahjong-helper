@@ -45,21 +45,21 @@ describe("service-parse", () => {
     test("input can't be null or empty", () => {
       expect(parse).toThrow("输入不可为空");
     });
-    test("correct parse wan", () => {
+    test("correct parse man", () => {
       const result = getTileByCodeAndAcronym("m", "123456780", "m", "123 999", [
         0,
         1
       ]);
       expect(parse("123405678mf123m 999m")).toEqual(result);
     });
-    test("correct parse suo", () => {
+    test("correct parse sou", () => {
       const result = getTileByCodeAndAcronym("s", "123456780", "s", "888 999", [
         1,
         1
       ]);
       expect(parse("123405678sf888s 999s")).toEqual(result);
     });
-    test("correct parse tong", () => {
+    test("correct parse pin", () => {
       const result = getTileByCodeAndAcronym("p", "123456780", "p", "888 999", [
         1,
         1
@@ -109,7 +109,7 @@ describe("service-parse", () => {
     });
   });
   describe("toCode", () => {
-    test("correct parse wan", () => {
+    test("correct parse man", () => {
       const { handTiles, fuluTiles } = getTileByCodeAndAcronym(
         "m",
         "123456780",
@@ -119,7 +119,7 @@ describe("service-parse", () => {
       );
       expect(toCode(handTiles, fuluTiles)).toEqual("123405678mf888m 999m");
     });
-    test("correct parse suo", () => {
+    test("correct parse sou", () => {
       const { handTiles, fuluTiles } = getTileByCodeAndAcronym(
         "s",
         "123456708",
@@ -129,7 +129,7 @@ describe("service-parse", () => {
       );
       expect(toCode(handTiles, fuluTiles)).toEqual("123405678sf888s 9999s");
     });
-    test("correct parse tong", () => {
+    test("correct parse pin", () => {
       const { handTiles, fuluTiles } = getTileByCodeAndAcronym(
         "p",
         "120345678",
