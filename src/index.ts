@@ -6,7 +6,9 @@ export {
   isSangen,
   isJi,
   isValidTileTypeAcronym,
-  isSameType
+  isSameType,
+  isRoutou,
+  isYaochu
 } from "./utils/tile";
 export { isTilesValid, sortTiles } from "./utils/hand";
 export { isKantsu, isKoutsu, isShuntsu } from "./utils/mentsu";
