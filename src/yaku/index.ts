@@ -4,7 +4,7 @@ import { yakuTypes, yakumanTypes } from "./yakuData";
 import { Player } from "../modal/Player";
 import { AgariDataInfo } from "../service/agari";
 import { calculateFu } from "../service/fu";
-import { calculateSumoPayPoint } from "../service/point";
+import { calculatePoint } from "../service/point";
 import { mentsuType } from "../modal/mentsu";
 
 export { yakuTypes, yakumanTypes };
@@ -48,7 +48,7 @@ export const checkYaku = (player: Player, agariDataInfo: AgariDataInfo) => {
   const yakumanResult = checkYakumanHelper(player, agariDataInfo);
   const yakuResult = checkYakuHelper(player, agariDataInfo);
   const fu = calculateFu(player, agariDataInfo);
-  const point = calculateSumoPayPoint(
+  const point = calculatePoint(
     yakuResult.yakuHan,
     fu,
     yakumanResult.yakumanTime

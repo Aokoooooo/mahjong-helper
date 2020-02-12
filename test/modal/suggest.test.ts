@@ -17,7 +17,10 @@ describe("modal-suggest", () => {
       yakumanResult: { yakumanTime: 0, yakumanList: [] },
       yakuResult: { yakuHan: 1, yakuList: [] },
       fu: 100,
-      point: { child: 100, parent: 200 }
+      point: {
+        tsumo: { child: 100, parent: 200, childGet: 400, parentGet: 600 },
+        ron: { child: 400, parent: 600 }
+      }
     };
 
     const sg2 = new Suggest(Tile.create("p3"), 1, map, 4, 3, yakuInfo);

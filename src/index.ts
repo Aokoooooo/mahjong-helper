@@ -50,5 +50,6 @@ export {
   pointRoundUp100,
   calculateBasePoint,
   calculateRonPoint,
-  calculateSumoPayPoint
+  calculateTsumoPoint,
+  calculatePoint
 } from "./service/point";

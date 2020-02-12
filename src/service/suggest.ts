@@ -38,7 +38,9 @@ const getYakuInfoHelper = (player: Player) => {
   const agariDataInfo = getAgariDataInfo(player.hand) as AgariDataInfo[];
   return agariDataInfo.reduce((x, y) => {
     const yakuInfo = checkYaku(player, y);
-    return yakuInfo.point.child > (x?.point?.child ?? 0) ? yakuInfo : x;
+    return yakuInfo.point.tsumo.child > (x?.point?.tsumo?.child ?? 0)
+      ? yakuInfo
+      : x;
     // tslint:disable-next-line: no-object-literal-type-assertion
   }, {} as CheckYakuReturenType);
 };

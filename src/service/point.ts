@@ -44,18 +44,17 @@ export const calculateBasePoint = (
  * @param han 番
  * @param fu 符
  * @param yakumanTimes 役满倍数
- * @param isParent 是否为亲家
  */
 export const calculateRonPoint = (
   han: number,
   fu: number,
-  yakumanTimes: number,
-  isParent?: boolean
+  yakumanTimes: number
 ) => {
   const basicPoint = calculateBasePoint(han, fu, yakumanTimes);
-  return isParent
-    ? pointRoundUp100(basicPoint * 6)
-    : pointRoundUp100(basicPoint * 4);
+  return {
+    child: pointRoundUp100(basicPoint * 4),
+    parent: pointRoundUp100(basicPoint * 6)
+  };
 };
 
 /**
@@ -64,16 +63,37 @@ export const calculateRonPoint = (
  * @param fu 符
  * @param yakumanTimes 役满倍数
  */
-export const calculateSumoPayPoint = (
+export const calculateTsumoPoint = (
   han: number,
   fu: number,
   yakumanTimes: number
 ) => {
   const basicPoint = calculateBasePoint(han, fu, yakumanTimes);
-  return {
+  const point = {
     child: pointRoundUp100(basicPoint),
     parent: pointRoundUp100(basicPoint * 2)
   };
+  return {
+    ...point,
+    childGet: 2 * point.child + point.parent,
+    parentGet: 3 * point.parent
+  };
+};
+
+/**
+ * 计算当前手牌对应的和牌点数,包含自摸,被自摸,荣和,是否为亲家,各种结果
+ * @param han 番
+ * @param fu 符
+ * @param yakumanTimes 役满倍数
+ */
+export const calculatePoint = (
+  han: number,
+  fu: number,
+  yakumanTimes: number
+) => {
+  const tsumo = calculateTsumoPoint(han, fu, yakumanTimes);
+  const ron = calculateRonPoint(han, fu, yakumanTimes);
+  return { tsumo, ron };
 };
 
 /**
