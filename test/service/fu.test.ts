@@ -184,7 +184,8 @@ describe("service-fu", () => {
       // 1番110 符
       expect(
         calculateFuByCodeAndOtherInfo("234m11777zf1111M 1111P", {
-          // isTsumo:true,
+          selfWindTile: Tile.create("z1"),
+          roundWindTile: Tile.create("z1"),
           winTile: Tile.create("z7")
         })
       ).toEqual(110);

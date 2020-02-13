@@ -13,6 +13,16 @@ export {
 export { isTilesValid, sortTiles } from "./utils/hand";
 export { isKantsu, isKoutsu, isShuntsu, isMentsuValid } from "./utils/mentsu";
 export {
+  getAnkan,
+  getAnkanNum,
+  getAnkou,
+  getAnkouNum,
+  getMinkan,
+  getMinkanNum,
+  getMinkou,
+  getMinkouNum
+} from "./utils/player";
+export {
   tileEnum,
   tileEnumKeys,
   tileEnumValues,

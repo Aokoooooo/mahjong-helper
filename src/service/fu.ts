@@ -20,17 +20,19 @@ export const calculateFu = (player: Player, agariDataInfo: AgariDataInfo) => {
   getAnkan(player).forEach(i => (fu += isYaochu(i) ? 32 : 16));
   getMinkan(player).forEach(i => (fu += isYaochu(i) ? 16 : 8));
   getAnkou(player, agariDataInfo).forEach(i => (fu += isYaochu(i) ? 8 : 4));
-  getMinkou(player, agariDataInfo).forEach(
-    i => (fu += i.tiles.some(j => isYaochu(j)) ? 4 : 2)
-  );
+  getMinkou(player, agariDataInfo).some(i => (fu += isYaochu(i) ? 4 : 2));
 
+  // 连风算4符
   if (isSangen(agariDataInfo.jantouTile)) {
     fu += 2;
-  } else if (agariDataInfo.jantouTile.id === player.roundWindTile?.id) {
-    fu += 2;
-  } else if (agariDataInfo.jantouTile.id === player.selfWindTile?.id) {
+  }
+  if (agariDataInfo.jantouTile.id === player.roundWindTile?.id) {
     fu += 2;
   }
+  if (agariDataInfo.jantouTile.id === player.selfWindTile?.id) {
+    fu += 2;
+  }
+
   // 算了半天一点符不加, 这个时候有些特殊情况需要处理一下
   if (fu === 20) {
     if (player.hand.fuluTiles.length) {
