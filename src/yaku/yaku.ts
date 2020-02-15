@@ -220,7 +220,7 @@ export const sanshokuDoukou = (
 };
 
 export const sanankou = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return getAnkouNum(player, agariDataInfo) === 3;
+  return getAnkouNum(player, agariDataInfo) + getAnkanNum(player) === 3;
 };
 
 export const sankantsu = (player: Player, agariDataInfo: AgariDataInfo) => {
