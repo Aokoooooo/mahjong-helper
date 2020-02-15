@@ -9,10 +9,15 @@ import {
   isRoutou,
   isSangen
 } from "../utils/tile";
-import { tileEnum } from "../enum/tile";
 import { Tile } from "../modal/tile";
 import { mentsuType } from "../modal/mentsu";
+import { getAnkouNum, getAnkanNum, getMinkanNum } from "../utils/player";
 
+// Ryanmen	両面
+// Penchan	辺張
+// Shanpon	双ポン
+// Kanchan	嵌張
+// Tanki	単騎
 export const pinfu = (player: Player, agariDataInfo: AgariDataInfo) => {
   // 门清限定
   if (player.hand.fuluTiles.length) {
@@ -24,7 +29,8 @@ export const pinfu = (player: Player, agariDataInfo: AgariDataInfo) => {
   return agariDataInfo.shuntsuFirstTiles.some(
     i =>
       isValidPinfuShuntsuFirstTile(i) &&
-      (i.id === player.winTile?.id || i.id + 2 === player.winTile?.id)
+      player.winTile &&
+      (i.id === player.winTile.id || i.id + 2 === player.winTile.id)
   );
 };
 
@@ -54,24 +60,37 @@ export const tanyao = (player: Player, agariDataInfo: AgariDataInfo) => {
   );
 };
 
+const yakuhaiHelper = (
+  player: Player,
+  agariDataInfo: AgariDataInfo,
+  targetTile: Tile | null
+) => {
+  return (
+    agariDataInfo.koutsuTiles.some(i => i.id === targetTile?.id) ||
+    player.hand.fuluTiles.some(i =>
+      i.type === mentsuType.shuntsu ? false : i.tiles[0].id === targetTile?.id
+    )
+  );
+};
+
 export const yakuhaiJikaze = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return agariDataInfo.koutsuTiles.some(i => i.id === player.selfWindTile?.id);
+  return yakuhaiHelper(player, agariDataInfo, player.selfWindTile);
 };
 
 export const yakuhaiBakaze = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return agariDataInfo.koutsuTiles.some(i => i.id === player.roundWindTile?.id);
+  return yakuhaiHelper(player, agariDataInfo, player.roundWindTile);
 };
 
 export const yakuhaiHaku = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return agariDataInfo.koutsuTiles.some(i => i.id === tileEnum.z5.id);
+  return yakuhaiHelper(player, agariDataInfo, Tile.create("z5"));
 };
 
 export const yakuhaiHatsu = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return agariDataInfo.koutsuTiles.some(i => i.id === tileEnum.z6.id);
+  return yakuhaiHelper(player, agariDataInfo, Tile.create("z6"));
 };
 
 export const yakuhaiChun = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return agariDataInfo.koutsuTiles.some(i => i.id === tileEnum.z7.id);
+  return yakuhaiHelper(player, agariDataInfo, Tile.create("z7"));
 };
 
 export const chiitoitsu = (player: Player, agariDataInfo: AgariDataInfo) => {
@@ -101,9 +120,11 @@ export const sanshokuDoujun = (
     .forEach((i: Tile) => {
       if (isMan(i)) {
         manTiles.push(i);
-      } else if (isPin(i)) {
+      }
+      if (isPin(i)) {
         pinTiles.push(i);
-      } else if (isSou(i)) {
+      }
+      if (isSou(i)) {
         souTiles.push(i);
       }
     });
@@ -156,7 +177,7 @@ export const toitoihou = (player: Player, agariDataInfo: AgariDataInfo) => {
   return (
     agariDataInfo.koutsuTiles.length +
       player.hand.fuluTiles.reduce(
-        (x, y) => (x + y.type === mentsuType.shuntsu ? 0 : 1),
+        (x, y) => x + (y.type === mentsuType.shuntsu ? 0 : 1),
         0
       ) ===
     4
@@ -178,9 +199,11 @@ export const sanshokuDoukou = (
     .forEach((i: Tile) => {
       if (isMan(i)) {
         manTiles.push(i);
-      } else if (isPin(i)) {
+      }
+      if (isPin(i)) {
         pinTiles.push(i);
-      } else if (isSou(i)) {
+      }
+      if (isSou(i)) {
         souTiles.push(i);
       }
     });
@@ -197,19 +220,11 @@ export const sanshokuDoukou = (
 };
 
 export const sanankou = (player: Player, agariDataInfo: AgariDataInfo) => {
-  const fuluAnkanNum = player.hand.fuluTiles.filter(
-    i => i.type === mentsuType.ankan
-  ).length;
-  const handkoutsuNum = agariDataInfo.koutsuTiles.some(
-    i => i.id === player.winTile?.id
-  )
-    ? agariDataInfo.koutsuTiles.length - 1
-    : agariDataInfo.koutsuTiles.length;
-  return fuluAnkanNum + handkoutsuNum === 3;
+  return getAnkouNum(player, agariDataInfo) === 3;
 };
 
 export const sankantsu = (player: Player, agariDataInfo: AgariDataInfo) => {
-  return player.hand.fuluTiles.filter(i => i.tiles.length === 4).length === 3;
+  return getAnkanNum(player) + getMinkanNum(player) === 3;
 };
 
 export const honroutou = (player: Player, agariDataInfo: AgariDataInfo) => {
@@ -236,9 +251,9 @@ export const shousangen = (player: Player, agariDataInfo: AgariDataInfo) => {
   if (!isSangen(agariDataInfo.jantouTile)) {
     return false;
   }
-  const fuluSangenKoutsuNum = player.hand.fuluTiles
-    .filter(i => i.type !== mentsuType.shuntsu)
-    .filter(i => isSangen(i.tiles[0])).length;
+  const fuluSangenKoutsuNum = player.hand.fuluTiles.filter(
+    i => i.type === mentsuType.koutsu && isSangen(i.tiles[0])
+  ).length;
   const handSangenKoutsuNum = agariDataInfo.koutsuTiles.filter(i => isSangen(i))
     .length;
   return fuluSangenKoutsuNum + handSangenKoutsuNum === 2;
@@ -262,9 +277,7 @@ export const junchantaiyaochuu = (
   }
   if (
     player.hand.handTiles.some(i => isJi(i)) ||
-    player.hand.fuluTiles.some(
-      i => i.type !== mentsuType.shuntsu && isJi(i.tiles[0])
-    )
+    player.hand.fuluTiles.some(i => isJi(i.tiles[0]))
   ) {
     return false;
   }
@@ -274,21 +287,15 @@ export const junchantaiyaochuu = (
 
   if (
     player.hand.fuluTiles.every(i => i.tiles.some(j => isRoutou(j))) &&
-    agariDataInfo.koutsuTiles.every(i => isYaochu(i)) &&
-    agariDataInfo.shuntsuFirstTiles.every(i => isYaochu(i) || i.id % 9 === 6)
+    agariDataInfo.koutsuTiles.every(i => isRoutou(i)) &&
+    agariDataInfo.shuntsuFirstTiles.every(i => isRoutou(i) || i.id % 9 === 6)
   ) {
     return true;
   }
   return false;
 };
 
-export const honiisou = (player: Player, agariDataInfo: AgariDataInfo) => {
-  if (
-    player.hand.fuluTiles.every(i => i.tiles.every(j => !isJi(j))) &&
-    player.hand.handTiles.every(i => !isJi(i))
-  ) {
-    return false;
-  }
+const iisouHelper = (player: Player, agariDataInfo: AgariDataInfo) => {
   let hasMan = false;
   let hasPin = false;
   let hasSou = false;
@@ -306,28 +313,24 @@ export const honiisou = (player: Player, agariDataInfo: AgariDataInfo) => {
   return (hasMan ? 1 : 0) + (hasPin ? 1 : 0) + (hasSou ? 1 : 0) === 1;
 };
 
+export const honiisou = (player: Player, agariDataInfo: AgariDataInfo) => {
+  if (
+    player.hand.fuluTiles.every(i => i.tiles.some(j => !isJi(j))) &&
+    player.hand.handTiles.every(i => !isJi(i))
+  ) {
+    return false;
+  }
+  return iisouHelper(player, agariDataInfo);
+};
+
 export const chiniisou = (player: Player, agariDataInfo: AgariDataInfo) => {
   if (
-    player.hand.fuluTiles.some(i => i.tiles.some(j => isJi(j))) &&
+    player.hand.fuluTiles.some(i => i.tiles.some(j => isJi(j))) ||
     player.hand.handTiles.some(i => isJi(i))
   ) {
     return false;
   }
-  let hasMan = false;
-  let hasPin = false;
-  let hasSou = false;
-  const checker = (tile: Tile) => {
-    if (isMan(tile)) {
-      hasMan = true;
-    } else if (isPin(tile)) {
-      hasPin = true;
-    } else if (isSou(tile)) {
-      hasSou = true;
-    }
-  };
-  player.hand.fuluTiles.forEach(i => i.tiles.forEach(j => checker(j)));
-  player.hand.handTiles.forEach(i => checker(i));
-  return (hasMan ? 1 : 0) + (hasPin ? 1 : 0) + (hasSou ? 1 : 0) === 1;
+  return iisouHelper(player, agariDataInfo);
 };
 
 export default {

@@ -7,7 +7,7 @@ import { calculateFu } from "../service/fu";
 import { calculatePoint } from "../service/point";
 import { mentsuType } from "../modal/mentsu";
 
-export { yakuTypes, yakumanTypes };
+export { yakuTypes, yakumanTypes, yakuTest, yakumanTest };
 
 export const checkYakumanHelper = (
   player: Player,
