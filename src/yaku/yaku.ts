@@ -38,14 +38,11 @@ export const isValidPinfuShuntsuFirstTile = (tile: Tile) => {
   return tile.id % 9 > 0 && tile.id % 9 < 6;
 };
 
-export const riichi = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const riichi = (player: Player) => {
   return player.isRiichi;
 };
 
-export const menzenchinTsumohou = (
-  player: Player,
-  agariDataInfo: AgariDataInfo
-) => {
+export const menzenchinTsumohou = (player: Player) => {
   return player.isTsumo && player.hand.fuluTiles.length === 0;
 };
 
@@ -53,7 +50,7 @@ export const iipeikou = (player: Player, agariDataInfo: AgariDataInfo) => {
   return agariDataInfo.isIipeikou;
 };
 
-export const tanyao = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const tanyao = (player: Player) => {
   return (
     player.hand.handTiles.every(i => !isYaochu(i)) &&
     player.hand.fuluTiles.every(i => i.tiles.every(j => !isYaochu(j)))
@@ -97,7 +94,7 @@ export const chiitoitsu = (player: Player, agariDataInfo: AgariDataInfo) => {
   return agariDataInfo.isChiitoi;
 };
 
-export const daburuRiichi = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const daburuRiichi = (player: Player) => {
   return player.isDaburuRiichi;
 };
 
@@ -227,7 +224,7 @@ export const sankantsu = (player: Player, agariDataInfo: AgariDataInfo) => {
   return getAnkanNum(player) + getMinkanNum(player) === 3;
 };
 
-export const honroutou = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const honroutou = (player: Player) => {
   if (
     player.hand.fuluTiles.every(i => i.tiles.every(j => isJi(j))) &&
     player.hand.handTiles.every(i => isJi(i))
@@ -295,7 +292,7 @@ export const junchantaiyaochuu = (
   return false;
 };
 
-const iisouHelper = (player: Player, agariDataInfo: AgariDataInfo) => {
+const iisouHelper = (player: Player) => {
   let hasMan = false;
   let hasPin = false;
   let hasSou = false;
@@ -320,7 +317,7 @@ export const honiisou = (player: Player, agariDataInfo: AgariDataInfo) => {
   ) {
     return false;
   }
-  return iisouHelper(player, agariDataInfo);
+  return iisouHelper(player);
 };
 
 export const chiniisou = (player: Player, agariDataInfo: AgariDataInfo) => {
@@ -330,7 +327,7 @@ export const chiniisou = (player: Player, agariDataInfo: AgariDataInfo) => {
   ) {
     return false;
   }
-  return iisouHelper(player, agariDataInfo);
+  return iisouHelper(player);
 };
 
 export default {

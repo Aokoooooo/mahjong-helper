@@ -31,14 +31,11 @@ const kokushiMusouHelper = (player: Player, isJuusanMen: boolean) => {
   return tileNum === checkNum;
 };
 
-export const kokushiMusou = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const kokushiMusou = (player: Player) => {
   return kokushiMusouHelper(player, false);
 };
 
-export const kokushiMusouJuusanMenmachi = (
-  player: Player,
-  agariDataInfo: AgariDataInfo
-) => {
+export const kokushiMusouJuusanMenmachi = (player: Player) => {
   return kokushiMusouHelper(player, true);
 };
 
@@ -103,14 +100,14 @@ export const daisuushii = (player: Player, agariDataInfo: AgariDataInfo) => {
   return fuluNum + handNum === 4;
 };
 
-export const tsuuiisou = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const tsuuiisou = (player: Player) => {
   return (
     player.hand.fuluTiles.every(i => i.tiles.some(i => isJi(i))) &&
     player.hand.handTiles.every(i => isJi(i))
   );
 };
 
-export const ryuuiisou = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const ryuuiisou = (player: Player) => {
   const ryuuTileIdSet = new Set<number>(
     parse("23468s6z").handTiles.map(i => i.id)
   );
@@ -122,7 +119,7 @@ export const ryuuiisou = (player: Player, agariDataInfo: AgariDataInfo) => {
   );
 };
 
-export const chinroutou = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const chinroutou = (player: Player) => {
   return (
     player.hand.fuluTiles.every(i => i.tiles.some(j => isRoutou(j))) &&
     player.hand.handTiles.every(i => isRoutou(i))
@@ -169,7 +166,7 @@ export const junseiChuurenPoutou = (
   return chuurenPoutouHelper(player, agariDataInfo, true);
 };
 
-export const suukantsu = (player: Player, agariDataInfo: AgariDataInfo) => {
+export const suukantsu = (player: Player) => {
   return getMinkanNum(player) + getAnkanNum(player) === 4;
 };
 
