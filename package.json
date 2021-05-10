@@ -15,7 +15,7 @@
     "prepublishOnly": "cross-env node ./scripts/prepublish.js && yarn tsc && yarn webpack"
   },
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
